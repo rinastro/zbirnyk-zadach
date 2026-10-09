@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  ЯК РЕДАГУВАТИ ЦЕЙ САЙТ                                          ║
+  ║                                                                  ║
+  ║  Шукай у файлі позначку  ✏️  — нею підписано все, що можна       ║
+  ║  змінювати:                                                      ║
+  ║    1. Назва вкладки та опис сайту   (трохи нижче)                ║
+  ║    2. Кольори                       (блок :root у стилях)        ║
+  ║    3. Заголовок і підзаголовок      (розділ «ШАПКА»)             ║
+  ║    4. ЗАДАЧІ                        (розділ «ЗАДАЧІ»)            ║
+  ║    5. Імʼя в підписі                (розділ «ПІДПИС»)            ║
+  ║                                                                  ║
+  ║  Теми, лічильники, номери задач і рік оновлюються самі.          ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+
+<!-- ✏️ 1. Назва вкладки та опис для пошуковиків -->
+<title>Збірник задач з фізики та астрономії</title>
+<meta name="description" content="Збірник задач з фізики та астрономії з розв’язками та відповідями. Авторка — Дарина Проволовська.">
+
+<meta name="theme-color" content="#4317c9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%236d28d9'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='white'/%3E%3Cellipse cx='16' cy='16' rx='12' ry='5' fill='none' stroke='white' stroke-width='1.6' transform='rotate(-25 16 16)'/%3E%3C/svg%3E">
+
+<!-- Шрифти (обидва підтримують українську) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Формули: пиши їх між знаками долара, напр. $v = \frac{s}{t}$ -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+<style>
+/* ✏️ 2. КОЛЬОРИ — зміни значення, і весь сайт перефарбується */
+:root{
+  --violet:#7c3aed;   /* яскравий фіолетовий */
+  --indigo:#4317c9;   /* основний фон */
+  --deep:#1d0a7a;     /* темний фіолетовий */
+  --night:#0e0452;    /* найтемніший кут */
+  --glow:230,214,255; /* біле сяйво (числа R,G,B) */
+
+  --ink:#fff;
+  --ink-soft:rgba(255,255,255,.8);
+  --ink-quiet:rgba(255,255,255,.68);
+  --font-display:"Unbounded",system-ui,sans-serif;
+  --font-body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;
+  font:400 1.0625rem/1.6 var(--font-body);
+  color:var(--ink);background:var(--indigo);
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(255,255,255,.3)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+/* ───────── Фон: фіолетове світло з білими відблисками ───────── */
+.sky{
+  position:fixed;inset:0;z-index:-1;overflow:hidden;
+  background:linear-gradient(155deg,var(--violet) 0%,var(--indigo) 36%,var(--deep) 72%,var(--night) 100%);
+}
+.sky::before{
+  content:"";position:absolute;inset:-25%;
+  background:
+    radial-gradient(34% 38% at 20% 62%, rgba(var(--glow),.88), transparent 70%),
+    radial-gradient(32% 34% at 84% 86%, rgba(var(--glow),.82), transparent 70%),
+    radial-gradient(40% 44% at 76% 24%, rgba(10,2,70,.95), transparent 72%),
+    radial-gradient(28% 28% at 42% 20%, rgba(150,95,255,.55), transparent 70%);
+  animation:drift 38s ease-in-out infinite alternate;
+}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) rotate(5deg) scale(1.07)}}
+
+/* ───────── Скло ───────── */
+.glass,.task{position:relative;isolation:isolate}
+.glass::before,.task::before{            /* світлий обідок, як грань скла */
+  content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;padding:1px;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.75),rgba(255,255,255,.1) 32%,rgba(255,255,255,.06) 66%,rgba(255,255,255,.5));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.glass{
+  border-radius:30px;
+  background:
+    linear-gradient(140deg,rgba(255,255,255,.2),rgba(255,255,255,.04) 46%,rgba(124,58,237,.16)),
+    rgba(52,20,160,.36);
+  -webkit-backdrop-filter:blur(26px) saturate(170%) brightness(.8);
+          backdrop-filter:blur(26px) saturate(170%) brightness(.8);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.4),
+    inset 0 -20px 32px -24px rgba(255,255,255,.28),
+    0 28px 64px -20px rgba(12,0,70,.6);
+}
+
+/* ───────── Каркас ───────── */
+.wrap{width:min(100% - 2rem, 46rem);margin-inline:auto}
+header.top{padding:clamp(3rem,9vw,6rem) 0 clamp(1.5rem,4vw,2.25rem)}
+h1{
+  margin:0;
+  font:600 clamp(1.85rem,6.4vw,3.35rem)/1.1 var(--font-display);
+  letter-spacing:-.025em;text-wrap:balance;
+  text-shadow:0 2px 30px rgba(14,4,82,.45);
+}
+.lead{margin:1.1rem 0 0;max-width:34rem;color:var(--ink-soft);font-size:1.125rem;text-shadow:0 1px 18px rgba(14,4,82,.5)}
+
+/* ───────── Панель пошуку ───────── */
+.palette{padding:.9rem}
+.search{
+  display:flex;align-items:center;gap:.7rem;
+  padding:0 1rem;height:3.4rem;border-radius:18px;
+  background:rgba(255,255,255,.1);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);
+}
+.search:focus-within{background:rgba(255,255,255,.16);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)}
+.search svg{flex:none;width:1.3rem;height:1.3rem;opacity:.8}
+.search input{flex:1;min-width:0;height:100%;border:0;background:none;outline:0;font-size:1.0625rem}
+.search input::placeholder{color:var(--ink-quiet)}
+.search input::-webkit-search-cancel-button{display:none}
+.search kbd{
+  flex:none;font:500 .8rem var(--font-body);color:var(--ink-quiet);
+  padding:.15rem .5rem;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);
+}
+@media (hover:none){.search kbd{display:none}}
+
+.segments{display:flex;gap:.3rem;margin:.9rem 0 0;padding:.3rem;border-radius:16px;background:rgba(20,6,96,.32)}
+.segments button{
+  flex:1;min-width:0;padding:.55rem .4rem;border:0;border-radius:12px;background:none;
+  font-weight:500;font-size:.98rem;color:var(--ink-soft);
+}
+.segments button:hover{color:#fff}
+.segments button[aria-pressed="true"]{
+  color:var(--deep);background:#fff;
+  box-shadow:0 6px 18px -8px rgba(12,0,70,.7);
+}
+
+.topics{margin-top:.5rem}
+.group-name{margin:.9rem .65rem .35rem;font-size:.95rem;color:var(--ink-quiet)}
+.topic{
+  display:flex;align-items:center;gap:.8rem;width:100%;
+  padding:.62rem .75rem;border:0;border-radius:13px;background:none;text-align:left;
+  font-size:1.0625rem;color:var(--ink-soft);
+}
+.topic svg{flex:none;width:1.35rem;height:1.35rem;opacity:.85}
+.topic .name{flex:1;min-width:0}
+.topic .count{font-variant-numeric:tabular-nums;color:var(--ink-quiet);font-size:.95rem}
+.topic:hover{background:rgba(255,255,255,.09);color:#fff}
+.topic[aria-pressed="true"]{
+  color:#fff;font-weight:500;
+  background:linear-gradient(90deg,rgba(139,92,246,.85),rgba(109,62,230,.5));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.14);
+}
+.topic[aria-pressed="true"] .count{color:#fff}
+
+.status{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  margin:.6rem 0 0;padding:.7rem .65rem .1rem;border-top:1px solid rgba(255,255,255,.16);
+  font-size:.95rem;color:var(--ink-soft);
+}
+.link{border:0;background:none;padding:0;font-weight:500;text-decoration:underline;text-underline-offset:.2em}
+
+/* ───────── Задачі ───────── */
+main{padding:clamp(1.75rem,5vw,2.75rem) 0 1rem}
+#tasks{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem}
+.task{
+  border-radius:26px;
+  padding:clamp(1.15rem,4vw,1.75rem);
+  background:
+    linear-gradient(150deg,rgba(255,255,255,.15),rgba(255,255,255,.02) 42%),
+    rgba(44,15,138,.66);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 18px 44px -24px rgba(12,0,70,.7);
+  scroll-margin-top:1rem;
+}
+.task-meta{display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem;font-size:.95rem;color:var(--ink-soft)}
+.task-num{font:500 .82rem var(--font-display);color:#fff;padding:.32rem .7rem;border-radius:99px;background:rgba(255,255,255,.16);white-space:nowrap}
+.task-topic{display:flex;align-items:center;gap:.4rem;min-width:0}
+.task-topic svg{flex:none;width:1.1rem;height:1.1rem;opacity:.85}
+.task-level{display:flex;gap:3px;margin-left:auto}
+.task-level i{width:14px;height:5px;border-radius:3px;background:rgba(255,255,255,.24)}
+.task-level i.on{background:#fff}
+.task h3{margin:0 0 .5rem;font:500 1.08rem/1.35 var(--font-display);letter-spacing:-.01em;text-wrap:balance}
+.task p{margin:0 0 .8rem}
+.task>p:last-of-type{margin-bottom:0}
+
+.task details{margin-top:1.1rem}
+.task summary{
+  display:inline-flex;align-items:center;gap:.5rem;list-style:none;cursor:pointer;
+  padding:.5rem 1rem .5rem .8rem;border-radius:99px;font-weight:500;font-size:.98rem;
+  background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);
+}
+.task summary::-webkit-details-marker{display:none}
+.task summary::before{
+  content:"";width:.5rem;height:.5rem;margin:0 .2rem 0 .25rem;
+  border-right:2px solid #fff;border-bottom:2px solid #fff;
+  transform:translateY(-2px) rotate(45deg);transition:transform .2s;
+}
+.task details[open] summary::before{transform:translateY(2px) rotate(225deg)}
+.task summary:hover{background:rgba(255,255,255,.2)}
+.task details[open] summary{background:#fff;color:var(--deep)}
+.task details[open] summary::before{border-color:var(--deep)}
+.task details>p{margin:.8rem 0 0}
+.answer{
+  margin-top:1rem!important;padding:.7rem 1rem;border-radius:16px;
+  background:rgba(255,255,255,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.3);
+}
+.answer b{font-weight:600}
+.katex{font-size:1.08em}
+.katex-display{margin:.8rem 0;overflow-x:auto;overflow-y:hidden;padding:.2rem 0}
+
+.empty{padding:1.75rem;text-align:center}
+.empty p{margin:0 0 .6rem}
+
+/* ───────── Підпис ───────── */
+footer{padding:1.5rem 0 2.5rem;display:flex;justify-content:center}
+footer p{
+  margin:0;padding:.6rem 1.15rem;border-radius:99px;font-size:.95rem;
+  background:rgba(44,15,138,.6);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .sky::before{animation:none}
+  .task summary::before{transition:none}
+}
+</style>
+</head>
+
+<body>
+<div class="sky" aria-hidden="true"></div>
+
+<!-- Іконки (не чіпай) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-atom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></symbol>
+  <symbol id="i-planet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="5.5"/><path d="M7.2 14.6C4 16.4 2 18 2.6 19c.8 1.4 6.2-.4 11.4-3.4s9-6.6 8.2-8c-.5-.9-2.6-.6-5.4.6"/></symbol>
+  <symbol id="i-dot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4.5" y="4.5" width="15" height="15" rx="4"/><path d="M9 10h6M9 14h6" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <!-- ═══════════════ ШАПКА ═══════════════ -->
+  <header class="top">
+    <!-- ✏️ 3. Заголовок і підзаголовок -->
+    <h1>Збірник задач з фізики та астрономії</h1>
+    <p class="lead">Умови, розв’язки та відповіді. Обери тему або знайди задачу за словом.</p>
+  </header>
+
+  <!-- Панель пошуку: теми та лічильники зʼявляються самі із задач нижче -->
+  <section class="palette glass" aria-label="Пошук задач">
+    <label class="search">
+      <svg><use href="#i-search"/></svg>
+      <span class="sr-only">Пошук задачі</span>
+      <input id="q" type="search" placeholder="Знайти задачу…" autocomplete="off" enterkeyhint="search">
+      <kbd title="Натисни /, щоб шукати">/</kbd>
+    </label>
+    <div class="segments" id="segments" role="group" aria-label="Предмет"></div>
+    <div class="topics" id="topics"></div>
+    <div class="status">
+      <span id="status" role="status" aria-live="polite"></span>
+      <button class="link" id="reset" type="button" hidden>Скинути</button>
+    </div>
+  </section>
+
+  <main>
+    <div id="tasks">
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ✏️ 4. ЗАДАЧІ
+
+     Щоб ДОДАТИ задачу — скопіюй шаблон нижче (від <article до </article>),
+     встав у потрібне місце серед задач і заміни текст.
+
+       data-subject  — предмет:  Фізика  або  Астрономія
+       data-topic    — тема (будь-яка; нова тема сама зʼявиться в меню)
+       data-level    — складність:  1 легка,  2 середня,  3 складна
+
+     Номери задач ставляться самі — за порядком у файлі.
+     Формули пиши між доларами:   $E = mc^2$     — у рядку
+                                  $$E = mc^2$$   — окремим рядком
+     Дріб: \frac{a}{b}   корінь: \sqrt{x}   степінь: x^2   індекс: v_0
+     Одиниці в формулі: \text{м/с}      десяткова кома: 0{,}5
+
+     ШАБЛОН:
+
+<article class="task" data-subject="Фізика" data-topic="Механіка" data-level="1">
+  <h3>Назва задачі</h3>
+  <p>Умова задачі.</p>
+  <details>
+    <summary>Розв’язок</summary>
+    <p>Пояснення розв’язку.</p>
+    <p class="answer"><b>Відповідь:</b> …</p>
+  </details>
+</article>
+
+     Щоб ВИДАЛИТИ задачу — зітри її блок від <article до </article>.
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<article class="task" data-subject="Фізика" data-topic="Механіка" data-level="1">
+  <h3>Шлях автомобіля</h3>
+  <p>Автомобіль рухається рівномірно зі швидкістю $72$ км/год. Який шлях він проїде за $15$ хв?</p>
+  <details>
+    <summary>Розв’язок</summary>
+    <p>Переведемо величини в СІ: $v = 72\ \text{км/год} = 20\ \text{м/с}$, $t = 15\ \text{хв} = 900\ \text{с}$.</p>
+    <p>$$s = vt = 20 \cdot 900 = 18\,000\ \text{м} = 18\ \text{км}$$</p>
+    <p class="answer"><b>Відповідь:</b> 18 км.</p>
+  </details>
+</article>
+
+<article class="task" data-subject="Фізика" data-topic="Механіка" data-level="2">
+  <h3>Вільне падіння</h3>
+  <p>Тіло вільно падає без початкової швидкості з висоти $45$ м. Скільки часу триває падіння і з якою швидкістю тіло досягне землі? Опором повітря знехтуй, $g = 10\ \text{м/с}^2$.</p>
+  <details>
+    <summary>Розв’язок</summary>
+    <p>Висота пов’язана з часом падіння:</p>
+    <p>$$h = \frac{gt^2}{2} \;\Rightarrow\; t = \sqrt{\frac{2h}{g}} = \sqrt{\frac{2 \cdot 45}{10}} = 3\ \text{с}$$</p>
+    <p>Швидкість у момент падіння:</p>
+    <p>$$v = gt = 10 \cdot 3 = 30\ \text{м/с}$$</p>
+    <p class="answer"><b>Відповідь:</b> 3 с; 30 м/с.</p>
+  </details>
+</article>
+
+<article class="task" data-subject="Фізика" data-topic="Теплові явища" data-level="2">
+  <h3>Нагрівання води</h3>
+  <p>Яку кількість теплоти потрібно передати воді масою $2$ кг, щоб нагріти її від $20$ °C до $100$ °C? Питома теплоємність води $c = 4200$ Дж/(кг·°C).</p>
+  <details>
+    <summary>Розв’язок</summary>
+    <p>$$Q = cm(t_2 - t_1) = 4200 \cdot 2 \cdot (100 - 20) = 672\,000\ \text{Дж} = 672\ \text{кДж}$$</p>
+    <p class="answer"><b>Відповідь:</b> 672 кДж.</p>
+  </details>
+</article>
+
+<article class="task" data-subject="Фізика" data-topic="Електрика" data-level="1">
+  <h3>Закон Ома</h3>
+  <p>Резистор опором $12$ Ом під’єднали до джерела з напругою $6$ В. Знайди силу струму в резисторі та потужність, яка на ньому виділяється.</p>
+  <details>
+    <summary>Розв’язок</summary>
+    <p>$$I = \frac{U}{R} = \frac{6}{12} = 0{,}5\ \text{А}$$</p>
+    <p>$$P = UI = 6 \cdot 0{,}5 = 3\ \text{Вт}$$</p>
+    <p class="answer"><b>Відповідь:</b> 0,5 А; 3 Вт.</p>
+  </details>
+</article>
+
+<article class="task" data-subject="Фізика" data-topic="Оптика" data-level="2">
+  <h3>Збиральна лінза</h3>
+  <p>Предмет розташований на відстані $30$ см від збиральної лінзи з фокусною відстанню $20$ см. На якій відстані від лінзи утвориться зображення і яким воно буде?</p>
+  <details>
+    <summary>Розв’язок</summary>
+    <p>З формули тонкої лінзи, де $d$ — відстань до предмета, $f$ — до зображення:</p>
+    <p>$$\frac{1}{F} = \frac{1}{d} + \frac{1}{f} \;\Rightarrow\; \frac{1}{f} = \frac{1}{20} - \frac{1}{30} = \frac{1}{60}, \quad f = 60\ \text{см}$$</p>
+    <p>Збільшення $\Gamma = \dfrac{f}{d} = \dfrac{60}{30} = 2$. Оскільки $f > 0$, зображення дійсне й перевернуте.</p>
+    <p class="answer"><b>Відповідь:</b> 60 см від лінзи; зображення дійсне, перевернуте, збільшене вдвічі.</p>
+  </details>
+</article>
+
+<article class="task" data-subject="Астрономія" data-topic="Небесна механіка" data-level="2">
+  <h3>Рік на Марсі</h3>
+  <p>Велика піввісь орбіти Марса дорівнює $1{,}52$ а. о. Знайди період обертання Марса навколо Сонця в земних роках.</p>
+  <details>
+    <summary>Розв’язок</summary>
+    <p>Порівняємо Марс із Землею за третім законом Кеплера ($a_\oplus = 1$ а. о., $T_\oplus = 1$ рік):</p>
+    <p>$$\frac{T^2}{T_\oplus^2} = \frac{a^3}{a_\oplus^3} \;\Rightarrow\; T = \sqrt{1{,}52^3} \approx 1{,}87\ \text{року}$$</p>
+    <p class="answer"><b>Відповідь:</b> приблизно 1,87 земного року.</p>
+  </details>
+</article>
+
+<article class="task" data-subject="Астрономія" data-topic="Відстані до зір" data-level="1">
+  <h3>Паралакс зорі</h3>
+  <p>Річний паралакс зорі дорівнює $0{,}25''$. Яка відстань до неї в парсеках і світлових роках?</p>
+  <details>
+    <summary>Розв’язок</summary>
+    <p>Відстань у парсеках обернена до паралакса в кутових секундах:</p>
+    <p>$$r = \frac{1}{p} = \frac{1}{0{,}25} = 4\ \text{пк}$$</p>
+    <p>Один парсек — це приблизно $3{,}26$ світлового року, тож $r \approx 4 \cdot 3{,}26 \approx 13$ св. р.</p>
+    <p class="answer"><b>Відповідь:</b> 4 пк, або приблизно 13 світлових років.</p>
+  </details>
+</article>
+
+<article class="task" data-subject="Астрономія" data-topic="Зоряні величини" data-level="3">
+  <h3>Наскільки яскравіша зоря</h3>
+  <p>У скільки разів зоря першої зоряної величини яскравіша за зорю шостої величини?</p>
+  <details>
+    <summary>Розв’язок</summary>
+    <p>За формулою Погсона різниця в одну зоряну величину відповідає відношенню освітленостей $2{,}512$:</p>
+    <p>$$\frac{E_1}{E_2} = 2{,}512^{\,m_2 - m_1} = 2{,}512^{\,6 - 1} \approx 100$$</p>
+    <p class="answer"><b>Відповідь:</b> у 100 разів.</p>
+  </details>
+</article>
+
+<!-- ═══════════════ КІНЕЦЬ ЗАДАЧ — нові встав вище цього рядка ═══════════════ -->
+
+    </div>
+
+    <div class="empty glass" id="empty" hidden>
+      <p>За цим запитом задач немає. Спробуй інше слово або іншу тему.</p>
+      <button class="link" type="button" id="reset2">Показати всі задачі</button>
+    </div>
+  </main>
+
+  <!-- ═══════════════ ПІДПИС ═══════════════ -->
+  <footer>
+    <!-- ✏️ 5. Імʼя. Рік не чіпай — він оновлюється сам -->
+    <p>© Дарина Проволовська, <span id="year">2026</span></p>
+  </footer>
+
+</div>
+
+<script>
+/* Рік у підписі — завжди поточний */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ───────── Усе нижче працює саме, редагувати не потрібно ───────── */
+(() => {
+  const ICONS  = { 'Фізика': 'i-atom', 'Астрономія': 'i-planet' };
+  const LEVELS = { 1: 'легка', 2: 'середня', 3: 'складна' };
+
+  const $ = id => document.getElementById(id);
+  const tasks = [...document.querySelectorAll('#tasks .task')];
+  const input = $('q'), segs = $('segments'), topicsBox = $('topics');
+  const state = { subject: null, topic: null };
+
+  const norm = s => s.toLowerCase().replace(/[’ʼ`]/g, "'").replace(/\s+/g, ' ').trim();
+  const icon = subject => `<svg aria-hidden="true"><use href="#${ICONS[subject] || 'i-dot'}"/></svg>`;
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const plural = n => {
+    const a = n % 10, b = n % 100;
+    return a === 1 && b !== 11 ? 'задача' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'задачі' : 'задач';
+  };
+
+  /* 1. Номер, тема і складність на кожній задачі + дерево тем */
+  const tree = new Map();                       // предмет → (тема → кількість)
+  tasks.forEach((task, i) => {
+    const subject = task.dataset.subject || 'Інше';
+    const topic   = task.dataset.topic   || 'Без теми';
+    const level   = Math.min(3, Math.max(1, +task.dataset.level || 1));
+    task.dataset.subject = subject; task.dataset.topic = topic;
+    task.id = 'z' + (i + 1);
+
+    if (!tree.has(subject)) tree.set(subject, new Map());
+    const topics = tree.get(subject);
+    topics.set(topic, (topics.get(topic) || 0) + 1);
+
+    task.dataset.search = norm(`№${i + 1} ${i + 1} ${subject} ${topic} ${task.textContent}`);
+
+    const meta = el('div', 'task-meta');
+    meta.append(el('span', 'task-num', '№ ' + (i + 1)));
+    const t = el('span', 'task-topic'); t.innerHTML = icon(subject); t.append(topic); meta.append(t);
+    const lv = el('span', 'task-level'); lv.title = 'Складність: ' + LEVELS[level];
+    for (let k = 1; k <= 3; k++) lv.append(el('i', k <= level ? 'on' : ''));
+    lv.append(el('span', 'sr-only', 'Складність: ' + LEVELS[level]));
+    meta.append(lv);
+    task.prepend(meta);
+  });
+
+  /* 2. Перемикач предметів і список тем */
+  const segBtn = (label, subject) => {
+    const b = el('button', '', label); b.type = 'button';
+    b.onclick = () => { state.subject = subject; state.topic = null; apply(); };
+    b._subject = subject; segs.append(b);
+  };
+  segBtn('Усе', null);
+  tree.forEach((topics, subject) => {
+    segBtn(subject, subject);
+    const group = el('div', 'group'); group.dataset.subject = subject;
+    group.append(el('p', 'group-name', subject));
+    topics.forEach((count, topic) => {
+      const b = el('button', 'topic'); b.type = 'button';
+      b.innerHTML = icon(subject);
+      b.append(el('span', 'name', topic), el('span', 'count', count));
+      b._key = subject + '|' + topic;
+      b.onclick = () => {
+        state.topic = state.topic === b._key ? null : b._key;
+        apply();
+        if (state.topic) $('tasks').scrollIntoView({ block: 'start' });
+      };
+      group.append(b);
+    });
+    topicsBox.append(group);
+  });
+
+  /* 3. Фільтр */
+  function apply() {
+    const words = norm(input.value).split(' ').filter(Boolean);
+    let shown = 0;
+    tasks.forEach(task => {
+      const key = task.dataset.subject + '|' + task.dataset.topic;
+      const ok = (!state.subject || task.dataset.subject === state.subject)
+              && (!state.topic || key === state.topic)
+              && words.every(w => task.dataset.search.includes(w));
+      task.hidden = !ok; if (ok) shown++;
+    });
+    [...segs.children].forEach(b => b.setAttribute('aria-pressed', b._subject === state.subject));
+    topicsBox.querySelectorAll('.group').forEach(g => g.hidden = !!state.subject && g.dataset.subject !== state.subject);
+    topicsBox.querySelectorAll('.topic').forEach(b => b.setAttribute('aria-pressed', b._key === state.topic));
+
+    const filtered = !!(state.subject || state.topic || words.length);
+    $('status').textContent = filtered
+      ? `Знайдено ${shown} із ${tasks.length}`
+      : `У збірнику ${tasks.length} ${plural(tasks.length)}`;
+    $('reset').hidden = !filtered;
+    $('empty').hidden = shown > 0;
+  }
+  function reset() { state.subject = state.topic = null; input.value = ''; apply(); }
+
+  input.addEventListener('input', apply);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { input.blur(); $('tasks').scrollIntoView({ block: 'start' }); }
+    if (e.key === 'Escape') { input.value = ''; apply(); }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement !== input) { e.preventDefault(); input.focus(); }
+  });
+  $('reset').onclick = reset;
+  $('reset2').onclick = () => { reset(); input.focus(); };
+  apply();
+})();
+
+/* Формули */
+function renderFormulas() {
+  renderMathInElement(document.getElementById('tasks'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '$',  right: '$',  display: false }
+    ],
+    throwOnError: false, strict: false
+  });
+}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderFormulas()"></script>
+</body>
+</html>
