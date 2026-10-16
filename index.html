@@ -3,56 +3,95 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Астрофізичний сад</title>
+<meta name="description" content="Астрофізичний цифровий сад: картки з ключовою теорією та задачі з розв’язками з фізики й астрономії. Авторка — Дарина Проволовська.">
+<meta name="theme-color" content="#1a2416">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232c3a24'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23f4efe1'/%3E%3Cellipse cx='16' cy='16' rx='12' ry='5' fill='none' stroke='%23f4efe1' stroke-width='1.6' transform='rotate(-25 16 16)'/%3E%3C/svg%3E">
 
 <!--
-  ╔══════════════════════════════════════════════════════════════════╗
-  ║  ЯК РЕДАГУВАТИ ЦЕЙ САЙТ                                          ║
-  ║                                                                  ║
-  ║  Шукай у файлі позначку  ✏️  — нею підписано все, що можна       ║
-  ║  змінювати:                                                      ║
-  ║    1. Назва вкладки та опис сайту   (трохи нижче)                ║
-  ║    2. Кольори                       (блок :root у стилях)        ║
-  ║    3. Заголовок і тексти            (розділи «ШАПКА», «ПРО       ║
-  ║                                      ЗБІРНИК», «ПОШУК»)          ║
-  ║    4. ЗАДАЧІ                        (розділ «ЗАДАЧІ»)            ║
-  ║    5. Імʼя в підписі                (розділ «ПІДПИС»)            ║
-  ║                                                                  ║
-  ║  Теми, лічильники, номери задач і рік оновлюються самі.          ║
-  ╚══════════════════════════════════════════════════════════════════╝
+  ════════════════════════════════════════════════════════════════════
+  АСТРОФІЗИЧНИЙ САД — ЯК РЕДАГУВАТИ
+
+  Сад складається з РОЗДІЛІВ (грядок). У кожному розділі впереміш
+  ростуть КАРТКИ з теорією та ЗАДАЧІ з розв’язками.
+  Меню, сторінки «Фізика» й «Астрономія», збірник усіх задач,
+  лічильники, номери задач і рік оновлюються самі.
+
+  1. НОВИЙ РОЗДІЛ — скопіюйте блок <section class="rozdil" …> … </section>
+     і змініть:
+       id            — адреса сторінки латинкою (буде #/ваш-id)
+       data-nazva    — великий заголовок
+       data-pidpys   — рукописний підзаголовок
+       data-predmet  — «Фізика» або «Астрономія»
+
+  2. НОВА КАРТКА — усередині розділу:
+       <article class="kartka">
+         <h3>Назва</h3>
+         <p class="propys">рукописний підзаголовок (необов'язково)</p>
+         <p>Текст. Ключове загорніть у <mark>…</mark>.</p>
+         <p class="formula">\[ E = mc^2 \]</p>
+       </article>
+     <mark>…</mark> ховається кнопкою «Сховати ключове»
+     і стає пропуском {{c1::…}} під час експорту в Anki.
+
+  3. НОВА ЗАДАЧА — усередині розділу, у будь-якому місці між картками:
+       <article class="zadacha" data-level="2">
+         <h3>Назва задачі</h3>
+         <p>Умова задачі.</p>
+         <details>
+           <summary>Розв’язок</summary>
+           <p>Пояснення розв’язку.</p>
+           <p class="vidpovid"><b>Відповідь:</b> …</p>
+         </details>
+       </article>
+     data-level — складність: 1 легка, 2 середня, 3 складна.
+     Номер задачі ставиться сам — за порядком у файлі.
+
+  4. ФОРМУЛИ пишуться в LaTeX:
+       у рядку        \( … \)  або  $ … $
+       окремим рядком \[ … \]  або  $$ … $$
+     Дріб \frac{a}{b}, корінь \sqrt{x}, одиниці \text{м/с},
+     десяткова кома 2{,}5
+
+  5. ФОТО НА ТЛІ — у :root замініть  --foto: none;
+     на  --foto: url("moye-foto.jpg");
+
+  6. Місця, які треба заповнити своїми даними, позначені словом ЗАМІНІТЬ.
+  ════════════════════════════════════════════════════════════════════
 -->
 
-<!-- ✏️ 1. Назва вкладки та опис для пошуковиків -->
-<title>Збірник задач з фізики та астрономії</title>
-<meta name="description" content="Збірник задач з фізики та астрономії з розв’язками та відповідями. Авторка — Дарина Проволовська.">
-
-<meta name="theme-color" content="#2743a6">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232743a6'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='white'/%3E%3Cellipse cx='16' cy='16' rx='12' ry='5' fill='none' stroke='white' stroke-width='1.6' transform='rotate(-25 16 16)'/%3E%3C/svg%3E">
-
-<!-- Шрифти (усі підтримують українську) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@600&display=swap" rel="stylesheet">
-
-<!-- Формули: пиши їх між знаками долара, напр. $v = \frac{s}{t}$ -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Onest:wght@300;400;500;600;700&family=Sofia+Sans+Extra+Condensed:wght@700;800&display=swap">
+<link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 
 <style>
-/* ✏️ 2. КОЛЬОРИ — зміни значення, і весь сайт перефарбується */
 :root{
-  --cobalt:#2743a6;   /* синій блок угорі */
-  --navy:#18267a;     /* текст, лінії та кнопки */
-  --space:#0c1550;    /* темний «космос» навколо сторінки */
-  --paper:#fafafa;    /* білий аркуш */
-  --mist:#dde3f5;     /* блідо-блакитна заливка: обрана тема, відповідь */
+  /* ліс і небо */
+  --lis-900:#1a2416;
+  --lis-700:#2c3a24;
+  --lis-500:#4b5b37;
+  --lis-300:#8a9863;
+  --serpanok:#aeb6a6;
+  --vershky:#f4efe1;      /* кремовий текст на тлі */
 
-  --line:color-mix(in srgb, var(--navy) 16%, transparent);
-  --line-strong:color-mix(in srgb, var(--navy) 42%, transparent);
-  --font-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --font-display:"Inter Tight","Inter",system-ui,sans-serif;
-  --font-script:"Great Vibes","Snell Roundhand","Segoe Script",cursive;
+  /* вікна: картки рожеві, задачі шавлієві */
+  --rozhevyi:#fbe6ee;
+  --rozhevyi-2:#f1cfdc;
+  --shavlia:#e9eddb;
+  --shavlia-2:#d5ddbb;
+  --chornylo:#2a2325;
 
-  --pad:clamp(1.15rem,8vw,5.5rem);  /* поля аркуша */
-  --col:41.3%;                      /* де починається права колонка */
+  /* шрифти */
+  --drukovani:"Sofia Sans Extra Condensed","Oswald","Arial Narrow",sans-serif;
+  --propys:"Great Vibes","Marck Script",cursive;
+  --tekst:"Onest","Segoe UI",system-ui,sans-serif;
+
+  /* власне фото на тлі: url("foto.jpg") */
+  --foto:none;
+
+  --shyryna:1180px;
+  --pole:clamp(16px,4vw,44px);
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -60,544 +99,1751 @@
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{
   margin:0;min-height:100vh;
-  font:400 1rem/1.55 var(--font-body);
-  color:var(--navy);background:var(--space);
+  background:var(--lis-900);color:var(--vershky);
+  font-family:var(--tekst);font-size:1rem;line-height:1.55;
+  display:flex;flex-direction:column;
   -webkit-font-smoothing:antialiased;
 }
-::selection{background:var(--mist);color:var(--navy)}
 a{color:inherit}
 button,input{font:inherit;color:inherit}
-button{cursor:pointer}
-:focus-visible{outline:2px solid currentColor;outline-offset:3px}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:4px}
+::selection{background:var(--rozhevyi-2);color:var(--chornylo)}
+.lyshe-chytachu{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.druk-pidpys{display:none}
 
-/* ───────── Космос навколо сторінки ───────── */
-.space{
-  position:fixed;inset:0;z-index:-1;overflow:hidden;
-  background:var(--space) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 9 0 0 0 -5.9'/%3E%3C/filter%3E%3Crect width='360' height='360' filter='url(%23s)' opacity='.45'/%3E%3C/svg%3E");
+/* ─────────── тло: зоряне небо над пагорбами ─────────── */
+.tlo{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--lis-700)}
+.tlo svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.tlo::before{content:"";position:absolute;inset:0;z-index:1;background:var(--foto) center/cover no-repeat}
+.tlo::after{
+  content:"";position:absolute;inset:0;z-index:2;
+  background:
+    radial-gradient(120% 90% at 50% 35%,transparent 40%,rgba(14,20,11,.55) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='z'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .45  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23z)'/%3E%3C/svg%3E");
+  mix-blend-mode:soft-light;
 }
-.space svg{position:absolute;width:max(64rem,105vw);left:-34vw;top:18vh;opacity:.55}
+.tlo .prytemnennia{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,28,16,.28),rgba(20,28,16,.05) 30%,rgba(20,28,16,.35))}
 
-/* ───────── Каркас ───────── */
-.page{width:min(100%,60rem);margin-inline:auto;padding-block:clamp(2rem,5vw,4rem)}
+/* ─────────── знаки ● ○ ⬭ ─────────── */
+.znaky{display:inline-flex;align-items:center;gap:.32em;font-size:14px;flex:none}
+.znaky i{display:block;width:1em;height:1em;border-radius:50%;border:.14em solid currentColor}
+.znaky i:first-child{background:currentColor}
+.znaky i:last-child{width:3.4em}
 
-/* ───────── Шапка ───────── */
-.hero{
-  position:relative;overflow:hidden;isolation:isolate;
-  background:var(--cobalt);color:#fff;
-  padding:1.4rem var(--pad) clamp(2.5rem,6vw,3.75rem);
+/* ─────────── верхня смуга ─────────── */
+.verkh{
+  position:sticky;top:0;z-index:20;
+  background:rgba(26,36,22,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(244,239,225,.14);
 }
-.globe{position:absolute;z-index:-1;width:max(30rem,86%);right:-17%;top:7%}
+.verkh-vmist{max-width:var(--shyryna);margin:0 auto;padding:.7rem var(--pole);display:flex;align-items:center;gap:1.5rem}
+.znak-saitu{display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;flex:none}
+.znak-saitu b{font-family:var(--drukovani);font-weight:800;font-size:1.35rem;line-height:1;text-transform:uppercase;letter-spacing:.02em}
+.menu{display:flex;align-items:center;gap:.25rem;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.menu::-webkit-scrollbar{display:none}
+.menu a,.menu button{flex:none;text-decoration:none;font-size:.95rem;font-weight:500;padding:.38rem .8rem;border-radius:999px;border:1px solid transparent;background:none;cursor:pointer;line-height:1.3}
+.menu a:hover,.menu button:hover{border-color:rgba(244,239,225,.45)}
+.menu a[aria-current="page"]{background:var(--vershky);color:var(--lis-700)}
+.menu .druk-knopka{border-color:rgba(244,239,225,.35);margin-left:.35rem}
 
-.nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;font-size:.8125rem}
-.nav a{text-decoration:none;padding:.5rem 0}
-.nav a:hover{text-decoration:underline;text-underline-offset:.3em}
-.nav-links{display:flex;gap:clamp(1.1rem,5vw,3.6rem)}
-.nav-links.end{justify-content:flex-end}
-.mark{font-size:.9375rem;letter-spacing:.32em;text-transform:uppercase;margin-right:-.32em}
+/* ─────────── загальна сітка ─────────── */
+main{flex:1}
+.obgortka{max-width:var(--shyryna);margin:0 auto;padding:0 var(--pole)}
+.propys{font-family:var(--propys);font-weight:400;text-transform:none;letter-spacing:0}
 
-h1{
-  --caps:clamp(1.7rem,7.4vw,4rem);
-  margin:clamp(2.6rem,8vw,4.2rem) 0 0;
-  font-size:var(--caps);font-weight:600;line-height:.92;
+/* ─────────── головна: афіша ─────────── */
+.afisha-ekran{position:relative;min-height:calc(100svh - 56px);display:flex;flex-direction:column;justify-content:space-between;padding-top:clamp(1.5rem,5vh,3.5rem);padding-bottom:clamp(1.2rem,4vh,2.5rem)}
+.planeta{position:absolute;top:clamp(1rem,4vh,2.6rem);right:var(--pole);width:clamp(64px,11vw,160px);aspect-ratio:1;z-index:0;filter:drop-shadow(0 0 30px rgba(244,239,225,.25))}
+.afisha-blok{position:relative;z-index:1}
+.afisha{
+  margin:0;font-family:var(--drukovani);font-weight:800;text-transform:uppercase;
+  font-size:clamp(4.5rem,21vw,19rem);line-height:.84;letter-spacing:-.005em;
 }
-h1 span{display:block}
-h1 .caps{font-family:var(--font-display);text-transform:uppercase;letter-spacing:-.045em}
-h1 .script{font-family:var(--font-script);font-weight:400;font-size:2.3em;line-height:.9;letter-spacing:0}
-.h-1{margin-left:10%}
-.h-2{margin-left:34%;margin-top:-.5em;position:relative}
-.h-3{margin-left:3%;display:flex;align-items:baseline;gap:.22em;margin-top:.14em}
-.h-3 .script{margin-top:-.2em}
-
-.hero-sub{margin:clamp(1.2rem,3vw,1.8rem) 0 0 34%;max-width:21rem;font-size:1rem;line-height:1.4}
-.btn{
-  display:inline-block;margin:1.5rem 0 0 34%;
-  padding:.65rem 1.9rem;border-radius:99px;
-  background:rgba(255,255,255,.86);color:var(--navy);
-  font-size:.8125rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
+.afisha .ryadok{display:block;white-space:nowrap}
+.afisha [data-mira]{display:inline-block}
+.afisha .propys{font-size:.6em;line-height:0;margin-left:-.02em}
+.afisha .ryadok.pravoruch{text-align:right;font-size:.62em;line-height:1;margin-top:-.12em;padding-right:.05em}
+.afisha .ryadok.pravoruch .propys{font-size:1em;line-height:1}
+.afisha-opys{
+  position:absolute;left:0;bottom:.2rem;margin:0;max-width:min(24rem,42%);
+  font-size:clamp(.78rem,1.15vw,.98rem);font-weight:500;line-height:1.35;text-transform:uppercase;letter-spacing:.03em;
 }
-.btn:hover{background:#fff}
-
-/* ───────── Аркуш ───────── */
-.sheet{background:var(--paper);padding:0 var(--pad) 2rem}
-.block{--top:clamp(2.75rem,8vw,5rem);position:relative;padding-top:var(--top)}
-.label{margin:0 0 .7rem;font-size:.8125rem}
-h2{margin:0;font:600 clamp(1.35rem,3.5vw,1.8rem)/1.18 var(--font-body);letter-spacing:-.022em}
-
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin:2.2rem 0 0}
-.stat{display:flex;flex-direction:column;gap:.35rem}
-.stat-n{font:300 clamp(2.6rem,7vw,3.6rem)/.9 var(--font-body);letter-spacing:-.045em;font-variant-numeric:tabular-nums}
-.stat-l{font-size:.8125rem;line-height:1.25}
-
-/* ───────── Пошук і теми ───────── */
-.toolbar{display:flex;align-items:center;justify-content:space-between;gap:1.2rem;flex-wrap:wrap;margin-top:1.6rem}
-.search{
-  display:flex;align-items:center;gap:.55rem;flex:1 1 15rem;min-width:0;max-width:22rem;
-  height:2.6rem;padding:0 1rem;border:1px solid var(--line-strong);border-radius:99px;
+.afisha-niz{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-top:2.5rem}
+.afisha-niz .znaky{font-size:clamp(18px,2.2vw,28px)}
+.pidpys-avtorky{display:inline-flex;align-items:center;gap:.8rem;text-decoration:none}
+.pidpys-avtorky .kruzhok{width:2.9rem;height:2.9rem;font-size:1.05rem}
+.pidpys-avtorky strong{display:block;font-family:var(--drukovani);font-weight:700;font-size:1.5rem;line-height:1;text-transform:uppercase;letter-spacing:.04em}
+.pidpys-avtorky small{display:block;font-size:.8rem;opacity:.85;margin-top:.15rem}
+.kruzhok{
+  display:grid;place-items:center;flex:none;border-radius:50%;overflow:hidden;
+  background:var(--serpanok);color:var(--lis-900);
+  font-family:var(--drukovani);font-weight:800;letter-spacing:.02em;
 }
-.search:focus-within{border-color:var(--navy);box-shadow:0 0 0 1px var(--navy)}
-.search svg{flex:none;width:1.05rem;height:1.05rem}
-.search input{flex:1;width:0;min-width:0;height:100%;border:0;background:none;outline:0;font-size:1rem}
-.search input::placeholder{color:var(--navy);opacity:.6}
-.search input::-webkit-search-cancel-button{display:none}
+.kruzhok img{width:100%;height:100%;object-fit:cover}
 
-.segments{display:flex;gap:1.2rem}
-.segments button{
-  border:0;background:none;padding:.5rem 0 .3rem;
-  font-size:.8125rem;letter-spacing:.05em;text-transform:uppercase;
-  opacity:.6;border-bottom:1px solid transparent;
+/* ─────────── сад у числах ─────────── */
+.chysla{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;border-top:1px solid rgba(244,239,225,.25);padding-top:1.4rem}
+.chyslo{display:flex;flex-direction:column;gap:.3rem;margin:0}
+.chyslo b{font-weight:300;font-size:clamp(2.8rem,7vw,5rem);line-height:.9;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.chyslo span{font-size:.85rem;line-height:1.25;opacity:.85}
+
+/* ─────────── вікна ─────────── */
+.vikno{
+  background:var(--rozhevyi);color:var(--chornylo);
+  border-radius:16px;
+  box-shadow:0 26px 50px -24px rgba(10,16,8,.85),0 2px 0 rgba(255,255,255,.5) inset;
 }
-.segments button:hover{opacity:1}
-.segments button[aria-pressed="true"]{opacity:1;border-bottom-color:currentColor}
+.zadacha.vikno{background:var(--shavlia)}
+.shapka{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 1rem .55rem;border-bottom:1px solid rgba(42,35,37,.14)}
+.shapka .znaky{font-size:10px}
+.mitka{font-size:.8rem;opacity:.72}
 
-.topics{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem}
-.topic{
-  display:inline-flex;align-items:baseline;gap:.5rem;
-  padding:.42rem .95rem;border:1px solid var(--line-strong);border-radius:99px;background:none;
-  font-size:.875rem;
+.blok{padding:clamp(2.5rem,7vw,5rem) 0}
+.blok-zaholovok{margin:0 0 1.6rem;font-family:var(--drukovani);font-weight:800;text-transform:uppercase;font-size:clamp(3rem,8vw,5.6rem);line-height:.86}
+.blok-zaholovok .propys{font-size:.62em;line-height:0;margin-left:.08em}
+.hrupa-nazva{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:2.2rem 0 .9rem;padding-bottom:.4rem;border-bottom:1px solid rgba(244,239,225,.25)}
+.hrupa-nazva:first-child{margin-top:0}
+.hrupa-nazva h3{margin:0;font-family:var(--drukovani);font-weight:800;text-transform:uppercase;font-size:2rem;line-height:1}
+.hrupa-nazva a{font-size:.9rem;text-underline-offset:.25em}
+
+/* про авторку */
+.pro-avtorku .vmist > div{min-width:0}
+.pro-avtorku .vmist{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.2rem,4vw,3rem);padding:clamp(1.4rem,4vw,2.8rem)}
+.pro-avtorku .kruzhok{width:clamp(5.5rem,14vw,9.5rem);height:clamp(5.5rem,14vw,9.5rem);font-size:clamp(2rem,5vw,3.6rem);background:var(--lis-500);color:var(--rozhevyi)}
+.pro-avtorku h2{margin:0;overflow-wrap:break-word;font-family:var(--drukovani);font-weight:800;text-transform:uppercase;font-size:clamp(2.6rem,6.5vw,4.6rem);line-height:.88}
+.pro-avtorku h2 + .propys{margin:-.1em 0 .7rem;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1}
+.pro-avtorku p{margin:0 0 .8rem;max-width:62ch}
+.kontakty{list-style:none;margin:1.2rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+.kontakty a{display:inline-block;text-decoration:none;font-weight:500;font-size:.93rem;padding:.42rem .95rem;border:1px solid var(--chornylo);border-radius:999px}
+.kontakty a:hover{background:var(--chornylo);color:var(--rozhevyi)}
+
+/* плитки розділів */
+.spysok-rozdiliv{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:1.1rem}
+.spysok-rozdiliv a{display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;padding:1.1rem 1rem 1.2rem;transition:transform .18s ease}
+.spysok-rozdiliv a:hover{transform:translateY(-4px)}
+.spysok-rozdiliv .nazva{font-family:var(--drukovani);font-weight:800;text-transform:uppercase;font-size:clamp(2.4rem,5vw,3.2rem);line-height:.9;margin-top:.35rem;max-width:100%;overflow-wrap:break-word}
+.spysok-rozdiliv .propys{font-size:2rem;line-height:1;margin:-.05em 0 .45rem}
+.spysok-rozdiliv .astro{background:var(--shavlia)}
+
+/* як користуватися */
+.kroky{list-style:none;counter-reset:krok;margin:0;padding:clamp(1.2rem,3vw,2rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:1.4rem}
+.kroky li{counter-increment:krok;display:grid;grid-template-columns:auto 1fr;gap:.8rem;align-items:start}
+.kroky li::before{content:counter(krok);font-family:var(--drukovani);font-weight:800;font-size:3.2rem;line-height:.8;color:var(--lis-500)}
+.kroky b{display:block}
+
+/* ─────────── сторінка розділу ─────────── */
+.rozdil-shapka{padding-top:clamp(1.6rem,5vw,3.2rem);padding-bottom:1.6rem}
+.nazad{display:inline-block;font-size:.92rem;text-underline-offset:.25em;margin-bottom:1.4rem}
+.rozdil-shapka .mitka{display:block;font-size:.95rem;opacity:.9;margin-bottom:.3rem}
+.rozdil-shapka h1{margin:0;font-family:var(--drukovani);font-weight:800;text-transform:uppercase;font-size:clamp(3.6rem,13vw,9.5rem);line-height:.84;overflow-wrap:break-word;hyphens:auto}
+.rozdil-shapka .propys{margin:-.18em 0 0 .3em;font-size:clamp(2.2rem,7vw,5rem);line-height:1}
+.panel{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;margin-top:1.6rem}
+.panel .rozdilnyk{width:1px;align-self:stretch;background:rgba(244,239,225,.3);margin:0 .25rem}
+
+.knopka{
+  font:inherit;font-size:.92rem;font-weight:500;line-height:1.2;cursor:pointer;text-decoration:none;display:inline-block;
+  color:inherit;background:transparent;border:1px solid currentColor;border-radius:999px;padding:.5rem 1.05rem;
 }
-.topic .count{font-size:.75rem;opacity:.65;font-variant-numeric:tabular-nums}
-.topic:hover{border-color:var(--navy)}
-.topic[aria-pressed="true"]{background:var(--mist);border-color:var(--mist);font-weight:500}
+.knopka:hover{background:rgba(244,239,225,.16)}
+.knopka[aria-pressed="true"]{background:var(--vershky);color:var(--lis-700);border-color:var(--vershky)}
+.knopka .lich{opacity:.65;font-size:.82em;margin-left:.4em;font-variant-numeric:tabular-nums}
+.vikno .knopka{font-size:.82rem;padding:.36rem .8rem}
+.vikno .knopka:hover,.vikno .knopka[aria-pressed="true"]{background:var(--chornylo);color:var(--rozhevyi);border-color:var(--chornylo)}
+.zadacha.vikno .knopka:hover{color:var(--shavlia)}
 
-.status{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.5rem;font-size:.8125rem;min-height:1.5rem}
-.link{border:0;background:none;padding:0;text-decoration:underline;text-underline-offset:.25em}
+/* фільтр «усе / картки / задачі» */
+.rozdil[data-vyd="kartky"] .zadacha,.rozdil[data-vyd="zadachi"] .kartka{display:none}
 
-/* ───────── Задачі ───────── */
-#tasks{margin-top:.7rem;border-bottom:1px solid var(--line)}
-.task{
-  display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.9rem;row-gap:.8rem;
-  padding:1.3rem 0 1.6rem;border-top:1px solid var(--line);scroll-margin-top:1rem;
-}
-.task-num,.task-meta{font-size:.8125rem;line-height:1.4}
-.task-num{font-variant-numeric:tabular-nums}
-.task-meta{display:flex;justify-content:space-between;gap:1rem}
-.task-level{opacity:.65}
-.task-body{grid-column:1/-1;min-width:0}
-.task h3{margin:0 0 .45rem;font:600 1.0625rem/1.3 var(--font-body);letter-spacing:-.01em}
-.task p{margin:0 0 .7rem}
-.task-body>p:last-of-type{margin-bottom:0}
+.kartky{columns:330px;column-gap:1.15rem;padding-bottom:clamp(3rem,8vw,6rem)}
+.element{break-inside:avoid;margin:0 0 1.15rem;display:block}
+.element .tilo{padding:1rem 1.15rem 1.1rem}
+.element h3{margin:0 0 .5rem;font-family:var(--drukovani);font-weight:800;text-transform:uppercase;font-size:2.25rem;line-height:.9;letter-spacing:.005em;overflow-wrap:break-word;hyphens:auto}
+.zadacha h3{font-size:1.95rem}
+.element h3 + .propys{margin:-.42rem 0 .55rem;font-size:1.85rem;line-height:1}
+.element p,.element ul,.element ol,.element table,.element figure{margin:0 0 .7rem}
+.element .tilo > :last-child{margin-bottom:0}
+.element ul,.element ol{padding-left:1.2rem}
+.element li{margin-bottom:.3rem}
+.element .formula{text-align:center;font-size:1.08rem;overflow-x:auto;overflow-y:hidden;padding:.15rem 0}
+.element .prymitka{font-size:.86rem;opacity:.78}
+.element table{width:100%;border-collapse:collapse;font-size:.9rem}
+.element th,.element td{padding:.45rem .4rem;border-top:1px solid rgba(42,35,37,.18);text-align:center;vertical-align:middle}
+.element thead th{border-top:0;font-weight:600}
+.element tbody th{text-align:left;font-weight:600}
+.element figure svg{display:block;width:100%;max-width:440px;height:auto;margin:0 auto}
+.element figcaption{font-size:.84rem;opacity:.78;text-align:center;margin-top:.3rem}
+.dii{display:flex;gap:.4rem;flex-wrap:wrap;padding:0 1.15rem 1rem}
+.katex{font-size:1.1em}
+.katex-display{margin:.3em 0;overflow-x:auto;overflow-y:hidden;padding:.15rem 0}
 
-.task details{margin-top:1rem}
-.task summary{
+/* задача: складність і розв’язок */
+.rivni{display:inline-flex;gap:.25rem;flex:none}
+.rivni i{display:block;width:.62rem;height:.62rem;border-radius:50%;border:1.5px solid currentColor}
+.rivni i.t{background:currentColor}
+.zadacha details{margin-top:.9rem}
+.zadacha summary{
   display:inline-flex;align-items:center;gap:.6rem;list-style:none;cursor:pointer;
-  padding:.5rem 1.1rem;border:1px solid var(--line-strong);border-radius:99px;
-  font-size:.75rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  padding:.4rem 1rem;border:1px solid var(--chornylo);border-radius:99px;
+  font-size:.76rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
 }
-.task summary::-webkit-details-marker{display:none}
-.task summary::after{content:"+";font-size:1rem;line-height:.6;font-weight:400}
-.task details[open] summary::after{content:"−"}
-.task summary:hover{border-color:var(--navy)}
-.task details[open] summary{background:var(--navy);border-color:var(--navy);color:var(--paper)}
-.task details>p{margin:.8rem 0 0}
-.answer{margin-top:1rem!important;padding:.7rem .95rem;border-radius:3px;background:var(--mist)}
-.answer b{font-weight:600}
-.katex{font-size:1.08em}
-.katex-display{margin:.8rem 0;overflow-x:auto;overflow-y:hidden;padding:.2rem 0}
+.zadacha summary::-webkit-details-marker{display:none}
+.zadacha summary::after{content:"+";font-size:1rem;line-height:.6;font-weight:400}
+.zadacha details[open] summary::after{content:"−"}
+.zadacha summary:hover,.zadacha details[open] summary{background:var(--chornylo);color:var(--shavlia)}
+.zadacha details > p{margin:.75rem 0 0}
+.zadacha .vidpovid{margin-top:.9rem!important;padding:.6rem .85rem;border-radius:8px;background:var(--shavlia-2)}
 
-.empty{padding:1.6rem 0;border-bottom:1px solid var(--line)}
-.empty p{margin:0 0 .5rem}
+/* ключове */
+mark{background:var(--rozhevyi-2);color:inherit;border-radius:5px;padding:.05em .28em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+mark:has(.katex-display){display:block;padding:.25em .4em}
+.skhovaty mark{cursor:pointer}
+.skhovaty mark:not(.vidkryto){background:var(--lis-500);color:transparent;user-select:none}
+.skhovaty mark:not(.vidkryto) *{visibility:hidden}
+.skhovaty mark:not(.vidkryto):hover{background:var(--lis-700)}
+.element.eksport mark{background:var(--rozhevyi-2)!important;color:inherit!important}
+.element.eksport .dii{display:none}
+.element.eksport mark *{visibility:visible!important}
 
-/* ───────── Підпис ───────── */
-footer{padding-top:2rem;font-size:.8125rem}
-footer p{margin:0}
+/* ─────────── збірник задач: пошук і фільтри ─────────── */
+.filtry{display:grid;gap:.8rem;margin-top:1.8rem}
+.poshuk{
+  display:flex;align-items:center;gap:.6rem;max-width:30rem;height:2.8rem;padding:0 1.1rem;
+  border:1px solid rgba(244,239,225,.55);border-radius:999px;background:rgba(26,36,22,.35);
+}
+.poshuk:focus-within{border-color:var(--vershky);box-shadow:0 0 0 1px var(--vershky)}
+.poshuk svg{flex:none;width:1.1rem;height:1.1rem}
+.poshuk input{flex:1;width:0;min-width:0;height:100%;border:0;background:none;outline:0;font-size:1rem}
+.poshuk input::placeholder{color:var(--vershky);opacity:.65}
+.poshuk input::-webkit-search-cancel-button{display:none}
+.hrupa{display:flex;flex-wrap:wrap;gap:.4rem}
+.hrupa .knopka{font-size:.86rem;padding:.4rem .85rem}
+.stan{display:flex;align-items:center;gap:1rem;font-size:.88rem;min-height:1.5rem}
+.lanka{border:0;background:none;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:.25em;font-size:inherit}
+.porozhn{padding:2rem 0 5rem}
+#spysok-zadach{columns:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:1.15rem;align-items:start}
+#spysok-zadach .element{margin:0}
+.porozhn p{margin:0 0 .6rem}
 
-/* ───────── Телефон: аркуш на всю ширину ───────── */
-@media (max-width:43.99rem){
-  .page{padding-block:0}
-  .nav{grid-template-columns:1fr auto}
-  .mark{display:none}
-  .h-1{margin-left:0}
-  .h-2{margin-left:21%}
-  .h-3{margin-left:0}
-  .hero-sub,.btn{margin-left:0}
-  .globe{right:-45%;top:16%}
+/* ─────────── розгорнуте вікно ─────────── */
+dialog.velyke{
+  border:0;padding:0;background:transparent;color:inherit;
+  width:min(760px,calc(100vw - 2*var(--pole)));max-height:calc(100dvh - 2rem);overflow:auto;
+}
+dialog.velyke::backdrop{background:rgba(14,20,11,.78);backdrop-filter:blur(4px)}
+dialog.velyke .element{margin:0;font-size:1.14rem}
+dialog.velyke .element h3{font-size:3.2rem}
+dialog.velyke .element h3 + .propys{font-size:2.5rem}
+dialog.velyke .element .tilo{padding:1.4rem 1.6rem 1.5rem}
+dialog.velyke .dii{padding:0 1.6rem 1.3rem}
+@media (prefers-reduced-motion:no-preference){
+  dialog.velyke[open]{animation:vyrynuty .18s ease-out}
+  @keyframes vyrynuty{from{opacity:0;transform:translateY(10px) scale(.985)}}
 }
 
-/* ───────── Широкий екран: колонки, як у журналі ───────── */
-@media (min-width:44rem){
-  .label{position:absolute;left:0;top:calc(var(--top) + .45rem);margin:0}
-  h2{text-indent:var(--col)}
-  .stats{grid-template-columns:var(--col) 30% 1fr;gap:0}
-  .stat{flex-direction:row;align-items:flex-end;gap:.1rem}
-  .stat-l{padding-bottom:.05rem}
-  .topics{justify-content:flex-end}
+/* ─────────── повідомлення та низ ─────────── */
+.spovishchennia{
+  position:fixed;left:1rem;right:1rem;bottom:1.2rem;margin:0 auto;width:fit-content;z-index:60;text-align:center;
+  background:var(--vershky);color:var(--lis-900);font-size:.92rem;font-weight:500;
+  padding:.65rem 1.1rem;border-radius:1.4rem;box-shadow:0 12px 30px -10px rgba(0,0,0,.6);
+}
+.nyz{border-top:1px solid rgba(244,239,225,.16);background:rgba(26,36,22,.6)}
+.nyz .obgortka{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 2rem;padding-top:1.1rem;padding-bottom:1.1rem;font-size:.88rem}
 
-  .task{grid-template-columns:25% 16.3% minmax(0,1fr);column-gap:0}
-  .task-meta{grid-column:1;grid-row:1;flex-direction:column;justify-content:flex-start;gap:.1rem;padding:.2rem 1rem 0 0}
-  .task-num{grid-column:2;grid-row:1;padding-top:.2rem}
-  .task-body{grid-column:3}
+/* ─────────── телефон ─────────── */
+@media (max-width:640px){
+  .verkh-vmist{gap:.9rem}
+  .znak-saitu b{display:none}
+  .menu{margin-left:0}
+  .afisha-opys{position:static;max-width:none;margin-top:1.1rem}
+  .afisha .ryadok.pravoruch{margin-top:-.02em}
+  .pro-avtorku .vmist{grid-template-columns:1fr}
+  .afisha-niz{margin-top:2rem}
+  .chysla{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:1.4rem}
+  .afisha-ekran{padding-top:4.2rem}
+  .planeta{width:48px;top:.9rem}
+  .panel .rozdilnyk{display:none}
 }
 
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* ─────────── друк: будь-яка сторінка саду ─────────── */
+@media print{
+  @page{margin:12mm}
+  .tlo,.verkh,.nyz,.panel,.dii,.nazad,.spovishchennia,.filtry,.planeta,.afisha-niz,.kontakty,.zadacha summary{display:none!important}
+  body{background:#fff;color:#000;display:block;font-size:10.5pt}
+  .druk-pidpys{display:block;font-size:8.5pt;margin:0 0 4mm;padding-bottom:2mm;border-bottom:.5pt solid #000}
+  .afisha-ekran{min-height:0;padding:0 0 6mm}
+  .afisha{font-size:54pt!important}
+  .afisha-opys{position:static;max-width:none;margin-top:3mm;color:#000}
+  .blok{padding:6mm 0}
+  .blok-zaholovok{font-size:32pt}
+  .rozdil-shapka{padding:0 0 4mm}
+  .rozdil-shapka h1{font-size:40pt}
+  .rozdil-shapka .propys{font-size:20pt;margin-top:-.1em}
+  .kartky{columns:2;column-gap:7mm;padding:0}
+  #spysok-zadach{display:block;columns:2}
+  #spysok-zadach .element{margin-bottom:5mm}
+  .vikno,.zadacha.vikno,.spysok-rozdiliv .astro{box-shadow:none;border:.6pt solid #000;background:#fff;border-radius:3mm;color:#000}
+  .shapka{border-bottom:.4pt solid #888;padding:1.5mm 3mm}
+  .element{margin-bottom:5mm;break-inside:avoid}
+  .element .tilo{padding:2.5mm 3.5mm 3mm}
+  .element h3{font-size:19pt}
+  mark{background:#eee}
+  .skhovaty mark:not(.vidkryto){background:#000}
+  .zadacha .vidpovid{background:none;border:.5pt solid #000}
+  .bez-rozv .zadacha details{display:none!important}
+  .chysla{border-color:#000}
+  .hrupa-nazva{border-color:#000}
+  .spysok-rozdiliv{grid-template-columns:repeat(3,1fr);gap:3mm}
+  .spysok-rozdiliv a{break-inside:avoid;padding:2mm}
+  .spysok-rozdiliv .nazva{font-size:18pt}
+  .spysok-rozdiliv .propys{font-size:14pt}
+}
 </style>
 </head>
 
 <body>
 
-<!-- Малюнок планети та іконки (не чіпай) -->
+<!-- Малюнки (не чіпайте) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <radialGradient id="g-light" cx="34%" cy="30%" r="78%">
-      <stop offset="0" stop-color="#fff" stop-opacity=".3"/>
-      <stop offset=".5" stop-color="#fff" stop-opacity=".05"/>
-      <stop offset="1" stop-color="#040a3a" stop-opacity=".55"/>
+    <radialGradient id="pl-svitlo" cx="34%" cy="30%" r="78%">
+      <stop offset="0" stop-color="#fff" stop-opacity=".35"/>
+      <stop offset=".55" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#1a2416" stop-opacity=".55"/>
     </radialGradient>
-    <filter id="g-land" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <filter id="pl-susha" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
       <feTurbulence type="fractalNoise" baseFrequency=".0075 .0095" numOctaves="6" seed="23"/>
-      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  14 0 0 0 -6.6"/>
+      <feColorMatrix values="0 0 0 0 .54  0 0 0 0 .6  0 0 0 0 .39  14 0 0 0 -6.6"/>
       <feComposite in2="SourceGraphic" operator="in"/>
     </filter>
-    <filter id="g-cloud" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <filter id="pl-khmary" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
       <feTurbulence type="fractalNoise" baseFrequency=".02 .05" numOctaves="5" seed="5"/>
       <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 4.5 0 0 -2.55"/>
       <feComposite in2="SourceGraphic" operator="in"/>
     </filter>
-    <symbol id="planet" viewBox="0 0 400 400">
-      <circle cx="200" cy="200" r="200" fill="#fff" opacity=".1"/>
-      <circle cx="200" cy="200" r="200" fill="#fff" opacity=".26" filter="url(#g-land)"/>
-      <circle cx="200" cy="200" r="200" fill="#fff" opacity=".2" filter="url(#g-cloud)"/>
-      <circle cx="200" cy="200" r="200" fill="url(#g-light)"/>
-    </symbol>
   </defs>
-  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="planeta" viewBox="0 0 400 400">
+    <circle cx="200" cy="200" r="200" fill="#f4efe1"/>
+    <circle cx="200" cy="200" r="200" fill="#fff" filter="url(#pl-susha)"/>
+    <circle cx="200" cy="200" r="200" fill="#fff" opacity=".35" filter="url(#pl-khmary)"/>
+    <circle cx="200" cy="200" r="200" fill="url(#pl-svitlo)"/>
+  </symbol>
+  <symbol id="i-poshuk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
 </svg>
 
-<div class="space" aria-hidden="true"><svg viewBox="0 0 400 400"><use href="#planet"/></svg></div>
-
-<div class="page">
-
-  <!-- ═══════════════ ШАПКА ═══════════════ -->
-  <header class="hero">
-    <svg class="globe" viewBox="0 0 400 400" aria-hidden="true"><use href="#planet"/></svg>
-
-    <nav class="nav" aria-label="Розділи">
-      <div class="nav-links" id="nav-subjects"></div>   <!-- предмети зʼявляються самі -->
-      <span class="mark">Збірник задач</span>           <!-- ✏️ напис посередині -->
-      <div class="nav-links end">
-  <a href="#about">Про збірник</a>
-  <a href="#find">Пошук</a>
+<!-- ═══════════ ТЛО ═══════════ -->
+<div class="tlo" aria-hidden="true">
+  <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="nebo" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#26322a"/><stop offset=".3" stop-color="#55635a"/><stop offset=".6" stop-color="#9aa596"/><stop offset="1" stop-color="#bfc3b0"/>
+      </linearGradient>
+      <linearGradient id="p1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c7b54"/><stop offset="1" stop-color="#55653f"/></linearGradient>
+      <linearGradient id="p2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#56673f"/><stop offset="1" stop-color="#3f4f30"/></linearGradient>
+      <linearGradient id="p3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#435433"/><stop offset="1" stop-color="#2f3d25"/></linearGradient>
+      <linearGradient id="p4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#31402a"/><stop offset="1" stop-color="#1f2a1a"/></linearGradient>
+      <filter id="rozmyttia" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="38"/></filter>
+    </defs>
+    <rect width="1600" height="1000" fill="url(#nebo)"/>
+    <!-- зорі -->
+    <g fill="#f4efe1">
+      <circle cx="90" cy="60" r="1.6" opacity=".8"/><circle cx="210" cy="140" r="1.1" opacity=".6"/><circle cx="330" cy="40" r="1.3" opacity=".7"/>
+      <circle cx="470" cy="110" r="1" opacity=".5"/><circle cx="560" cy="30" r="1.8" opacity=".85"/><circle cx="690" cy="170" r="1.1" opacity=".5"/>
+      <circle cx="780" cy="70" r="1.4" opacity=".75"/><circle cx="905" cy="25" r="1" opacity=".6"/><circle cx="1010" cy="125" r="1.5" opacity=".7"/>
+      <circle cx="1120" cy="50" r="1.1" opacity=".55"/><circle cx="1240" cy="150" r="1.3" opacity=".6"/><circle cx="1330" cy="35" r="1.7" opacity=".85"/>
+      <circle cx="1450" cy="95" r="1.1" opacity=".6"/><circle cx="1545" cy="190" r="1.3" opacity=".5"/><circle cx="150" cy="230" r="1" opacity=".4"/>
+      <circle cx="400" cy="210" r="1.2" opacity=".4"/><circle cx="1180" cy="230" r="1" opacity=".35"/><circle cx="1500" cy="20" r="1" opacity=".6"/>
+    </g>
+    <g filter="url(#rozmyttia)" opacity=".5">
+      <ellipse cx="320" cy="150" rx="420" ry="60" fill="#6f7c76"/>
+      <ellipse cx="1180" cy="110" rx="520" ry="70" fill="#69766f"/>
+      <ellipse cx="900" cy="290" rx="460" ry="50" fill="#d2d5c4"/>
+    </g>
+    <path fill="url(#p1)" d="M0 400C180 330 360 300 560 356S900 280 1110 332s350-60 490 6V1000H0Z"/>
+    <path fill="url(#p2)" d="M0 500C240 410 420 500 650 452s360-74 580 0 260-34 370 12V1000H0Z"/>
+    <path fill="url(#p3)" d="M0 630C300 548 520 650 800 592s460-62 800 22V1000H0Z"/>
+    <path fill="url(#p4)" d="M0 790C300 728 700 812 1000 762s400-12 600 30V1000H0Z"/>
+    <!-- маленька обсерваторія на пагорбі -->
+    <g transform="translate(800 742) scale(1.15)">
+      <rect x="-21" y="-2" width="42" height="34" fill="#d5d3c2"/>
+      <path d="M-25 -2a25 25 0 0 1 50 0Z" fill="#b9b8a8"/>
+      <path d="M-4 -26.6 4 -26.6 7 -2 -1 -2Z" fill="#2c3a24"/>
+      <rect x="-5" y="12" width="10" height="20" fill="#56604a"/>
+    </g>
+  </svg>
+  <div class="prytemnennia"></div>
 </div>
+
+<!-- ═══════════ ВЕРХНЯ СМУГА ═══════════ -->
+<header class="verkh">
+  <div class="verkh-vmist">
+    <a class="znak-saitu" href="#/" aria-label="На головну">
+      <span class="znaky" aria-hidden="true"><i></i><i></i><i></i></span>
+      <b>Астрофізичний сад</b>
+    </a>
+    <nav class="menu" id="menu" aria-label="Розділи">
+      <a href="#/fizyka">Фізика</a>
+      <a href="#/astronomiya">Астрономія</a>
+      <a href="#/zadachi">Задачі</a>
+      <button class="druk-knopka" type="button" data-diya="druk" title="Надрукувати цю сторінку">Друк</button>
     </nav>
+  </div>
+</header>
 
-    <!-- ✏️ 3. Заголовок. Рукописні слова — у рядках із class="script",
-         великі друковані — у рядках із class="caps". Міняй лише текст. -->
-    <h1>
-      <span class="script h-1">Збірник</span>
-      <span class="caps h-2">задач з фізики</span>
-      <span class="h-3"><span class="caps">та</span> <span class="script">астрономії</span></span>
-    </h1>
-    <p class="hero-sub">Умови, розв’язки та відповіді.</p>   <!-- ✏️ -->
-    <a class="btn" href="#find">До задач</a>                  <!-- ✏️ -->
-  </header>
+<main>
 
-  <div class="sheet">
+<p class="druk-pidpys obgortka">Астрофізичний сад · Дарина Проволовська</p>
 
-    <!-- ═══════════════ ПРО ЗБІРНИК ═══════════════ -->
-    <section class="block" id="about">
-      <p class="label">Про збірник</p>
-      <!-- ✏️ Текст про збірник -->
-      <h2>Задачі з фізики та астрономії для уроків, контрольних і олімпіад — кожна з покроковим розв’язком і відповіддю.</h2>
+<!-- ═══════════ ГОЛОВНА ═══════════ -->
+<div id="holovna" data-storinka data-nazva="Головна">
 
-      <!-- Числа рахуються самі із задач нижче -->
-      <div class="stats">
-        <p class="stat"><span class="stat-n" id="n-tasks">0</span><span class="stat-l"><span id="l-tasks">задач</span><br>з розв’язками</span></p>
-        <p class="stat"><span class="stat-n" id="n-topics">0</span><span class="stat-l"><span id="l-topics">тем</span><br>на вибір</span></p>
-        <p class="stat"><span class="stat-n" id="n-subjects">0</span><span class="stat-l"><span id="l-subjects">предмети</span><br>в одному місці</span></p>
+  <div class="obgortka afisha-ekran">
+    <svg class="planeta" viewBox="0 0 400 400" aria-hidden="true"><use href="#planeta"/></svg>
+
+    <div class="afisha-blok">
+      <h1 class="afisha" id="afisha" aria-label="Фізика та астрономія — цифровий сад">
+        <span class="ryadok">Фізика <span class="propys">та</span></span>
+        <span class="ryadok"><span data-mira>Астрономія</span></span>
+        <span class="ryadok pravoruch"><span class="propys">цифровий сад</span></span>
+      </h1>
+      <p class="afisha-opys">Астрофізичний сад: теорія росте картками, а поруч — задачі з розв’язками. Щоб повторити перед заняттям, контрольною чи олімпіадою.</p>
+    </div>
+
+    <div class="afisha-niz">
+      <span class="znaky" aria-hidden="true"><i></i><i></i><i></i></span>
+      <a class="pidpys-avtorky" href="#pro-avtorku">
+        <span class="kruzhok" aria-hidden="true">ДП</span>
+        <span><strong>Дарина Проволовська</strong><small>викладачка фізики та астрономії</small></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="obgortka">
+
+    <!-- Сад у числах: рахується саме -->
+    <section class="blok" aria-label="Сад у числах">
+      <div class="chysla">
+        <p class="chyslo"><b id="n-kartky">0</b><span id="l-kartky">карток</span></p>
+        <p class="chyslo"><b id="n-zadachi">0</b><span id="l-zadachi">задач</span></p>
+        <p class="chyslo"><b id="n-rozdily">0</b><span id="l-rozdily">розділів</span></p>
+        <p class="chyslo"><b id="n-predmety">0</b><span id="l-predmety">предмети</span></p>
       </div>
     </section>
 
-    <!-- ═══════════════ ПОШУК ═══════════════ -->
-    <section class="block" id="find" aria-label="Пошук задач">
-      <p class="label">Задачі</p>
-      <!-- ✏️ Заголовок над пошуком -->
-      <h2>Знайди задачу за темою, словом або номером.</h2>
+    <!-- Розділи: заповнюється автоматично -->
+    <section class="blok" id="rozdily" style="padding-top:0">
+      <h2 class="blok-zaholovok">Грядки <span class="propys">обирай тему</span></h2>
+      <div id="hrupy-rozdiliv"></div>
+    </section>
 
-      <div class="toolbar">
-        <label class="search">
-          <svg><use href="#i-search"/></svg>
-          <span class="sr-only">Пошук задачі</span>
-          <input id="q" type="search" placeholder="Знайти задачу…" autocomplete="off" enterkeyhint="search">
-        </label>
-        <div class="segments" id="segments" role="group" aria-label="Предмет"></div>
-      </div>
-      <div class="topics" id="topics" role="group" aria-label="Тема"></div>
-      <div class="status">
-        <span id="status" role="status" aria-live="polite"></span>
-        <button class="link" id="reset" type="button" hidden>Скинути</button>
+    <!-- Про авторку -->
+    <section class="blok pro-avtorku" id="pro-avtorku">
+      <div class="vikno">
+        <div class="shapka"><span class="znaky" aria-hidden="true"><i></i><i></i><i></i></span><span class="mitka">Про авторку</span></div>
+        <div class="vmist">
+          <!-- ЗАМІНІТЬ ініціали на фото: <span class="kruzhok"><img src="foto.jpg" alt="Дарина Проволовська"></span> -->
+          <span class="kruzhok" aria-hidden="true">ДП</span>
+          <div>
+            <h2>Дарина Проволовська</h2>
+            <p class="propys">викладачка фізики та астрономії</p>
+            <p>Викладаю фізику та астрономію школярам — у групах та індивідуально, онлайн і офлайн.</p>
+            <p>Це мій цифровий сад: картки з ключовою теорією та задачі з покроковими розв’язками ростуть тут поруч і поповнюються поступово.</p>
+            <!-- ЗАМІНІТЬ: кілька речень про себе — освіта, досвід, де викладаєте -->
+            <ul class="kontakty">
+              <!-- ЗАМІНІТЬ посилання на свої -->
+              <li><a href="https://t.me/ЗАМІНІТЬ">Telegram</a></li>
+              <li><a href="mailto:ЗАМІНІТЬ@example.com">Написати на пошту</a></li>
+              <li><a href="#/zadachi">До задач</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
-    <main>
-      <div id="tasks">
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     ✏️ 4. ЗАДАЧІ
-
-     Щоб ДОДАТИ задачу — скопіюй шаблон нижче (від <article до </article>),
-     встав у потрібне місце серед задач і заміни текст.
-
-       data-subject  — предмет:  Фізика  або  Астрономія
-       data-topic    — тема (будь-яка; нова тема сама зʼявиться в меню)
-       data-level    — складність:  1 легка,  2 середня,  3 складна
-
-     Номери задач ставляться самі — за порядком у файлі.
-     Формули пиши між доларами:   $E = mc^2$     — у рядку
-                                  $$E = mc^2$$   — окремим рядком
-     Дріб: \frac{a}{b}   корінь: \sqrt{x}   степінь: x^2   індекс: v_0
-     Одиниці в формулі: \text{м/с}      десяткова кома: 0{,}5
-
-     ШАБЛОН:
-
-<article class="task" data-subject="Фізика" data-topic="Механіка" data-level="1">
-  <h3>Назва задачі</h3>
-  <p>Умова задачі.</p>
-  <details>
-    <summary>Розв’язок</summary>
-    <p>Пояснення розв’язку.</p>
-    <p class="answer"><b>Відповідь:</b> …</p>
-  </details>
-</article>
-
-     Щоб ВИДАЛИТИ задачу — зітри її блок від <article до </article>.
-     ═══════════════════════════════════════════════════════════════════ -->
-
-<article class="task" data-subject="Фізика" data-topic="Механіка" data-level="1">
-  <h3>Шлях автомобіля</h3>
-  <p>Автомобіль рухається рівномірно зі швидкістю $72$ км/год. Який шлях він проїде за $15$ хв?</p>
-  <details>
-    <summary>Розв’язок</summary>
-    <p>Переведемо величини в СІ: $v = 72\ \text{км/год} = 20\ \text{м/с}$, $t = 15\ \text{хв} = 900\ \text{с}$.</p>
-    <p>$$s = vt = 20 \cdot 900 = 18\,000\ \text{м} = 18\ \text{км}$$</p>
-    <p class="answer"><b>Відповідь:</b> 18 км.</p>
-  </details>
-</article>
-
-<article class="task" data-subject="Фізика" data-topic="Механіка" data-level="2">
-  <h3>Вільне падіння</h3>
-  <p>Тіло вільно падає без початкової швидкості з висоти $45$ м. Скільки часу триває падіння і з якою швидкістю тіло досягне землі? Опором повітря знехтуй, $g = 10\ \text{м/с}^2$.</p>
-  <details>
-    <summary>Розв’язок</summary>
-    <p>Висота пов’язана з часом падіння:</p>
-    <p>$$h = \frac{gt^2}{2} \;\Rightarrow\; t = \sqrt{\frac{2h}{g}} = \sqrt{\frac{2 \cdot 45}{10}} = 3\ \text{с}$$</p>
-    <p>Швидкість у момент падіння:</p>
-    <p>$$v = gt = 10 \cdot 3 = 30\ \text{м/с}$$</p>
-    <p class="answer"><b>Відповідь:</b> 3 с; 30 м/с.</p>
-  </details>
-</article>
-
-<article class="task" data-subject="Фізика" data-topic="Теплові явища" data-level="2">
-  <h3>Нагрівання води</h3>
-  <p>Яку кількість теплоти потрібно передати воді масою $2$ кг, щоб нагріти її від $20$ °C до $100$ °C? Питома теплоємність води $c = 4200$ Дж/(кг·°C).</p>
-  <details>
-    <summary>Розв’язок</summary>
-    <p>$$Q = cm(t_2 - t_1) = 4200 \cdot 2 \cdot (100 - 20) = 672\,000\ \text{Дж} = 672\ \text{кДж}$$</p>
-    <p class="answer"><b>Відповідь:</b> 672 кДж.</p>
-  </details>
-</article>
-
-<article class="task" data-subject="Фізика" data-topic="Електрика" data-level="1">
-  <h3>Закон Ома</h3>
-  <p>Резистор опором $12$ Ом під’єднали до джерела з напругою $6$ В. Знайди силу струму в резисторі та потужність, яка на ньому виділяється.</p>
-  <details>
-    <summary>Розв’язок</summary>
-    <p>$$I = \frac{U}{R} = \frac{6}{12} = 0{,}5\ \text{А}$$</p>
-    <p>$$P = UI = 6 \cdot 0{,}5 = 3\ \text{Вт}$$</p>
-    <p class="answer"><b>Відповідь:</b> 0,5 А; 3 Вт.</p>
-  </details>
-</article>
-
-<article class="task" data-subject="Фізика" data-topic="Оптика" data-level="2">
-  <h3>Збиральна лінза</h3>
-  <p>Предмет розташований на відстані $30$ см від збиральної лінзи з фокусною відстанню $20$ см. На якій відстані від лінзи утвориться зображення і яким воно буде?</p>
-  <details>
-    <summary>Розв’язок</summary>
-    <p>З формули тонкої лінзи, де $d$ — відстань до предмета, $f$ — до зображення:</p>
-    <p>$$\frac{1}{F} = \frac{1}{d} + \frac{1}{f} \;\Rightarrow\; \frac{1}{f} = \frac{1}{20} - \frac{1}{30} = \frac{1}{60}, \quad f = 60\ \text{см}$$</p>
-    <p>Збільшення $\Gamma = \dfrac{f}{d} = \dfrac{60}{30} = 2$. Оскільки $f > 0$, зображення дійсне й перевернуте.</p>
-    <p class="answer"><b>Відповідь:</b> 60 см від лінзи; зображення дійсне, перевернуте, збільшене вдвічі.</p>
-  </details>
-</article>
-
-<article class="task" data-subject="Астрономія" data-topic="Небесна механіка" data-level="2">
-  <h3>Рік на Марсі</h3>
-  <p>Велика піввісь орбіти Марса дорівнює $1{,}52$ а. о. Знайди період обертання Марса навколо Сонця в земних роках.</p>
-  <details>
-    <summary>Розв’язок</summary>
-    <p>Порівняємо Марс із Землею за третім законом Кеплера ($a_\oplus = 1$ а. о., $T_\oplus = 1$ рік):</p>
-    <p>$$\frac{T^2}{T_\oplus^2} = \frac{a^3}{a_\oplus^3} \;\Rightarrow\; T = \sqrt{1{,}52^3} \approx 1{,}87\ \text{року}$$</p>
-    <p class="answer"><b>Відповідь:</b> приблизно 1,87 земного року.</p>
-  </details>
-</article>
-
-<article class="task" data-subject="Астрономія" data-topic="Відстані до зір" data-level="1">
-  <h3>Паралакс зорі</h3>
-  <p>Річний паралакс зорі дорівнює $0{,}25''$. Яка відстань до неї в парсеках і світлових роках?</p>
-  <details>
-    <summary>Розв’язок</summary>
-    <p>Відстань у парсеках обернена до паралакса в кутових секундах:</p>
-    <p>$$r = \frac{1}{p} = \frac{1}{0{,}25} = 4\ \text{пк}$$</p>
-    <p>Один парсек — це приблизно $3{,}26$ світлового року, тож $r \approx 4 \cdot 3{,}26 \approx 13$ св. р.</p>
-    <p class="answer"><b>Відповідь:</b> 4 пк, або приблизно 13 світлових років.</p>
-  </details>
-</article>
-
-<article class="task" data-subject="Астрономія" data-topic="Зоряні величини" data-level="3">
-  <h3>Наскільки яскравіша зоря</h3>
-  <p>У скільки разів зоря першої зоряної величини яскравіша за зорю шостої величини?</p>
-  <details>
-    <summary>Розв’язок</summary>
-    <p>За формулою Погсона різниця в одну зоряну величину відповідає відношенню освітленостей $2{,}512$:</p>
-    <p>$$\frac{E_1}{E_2} = 2{,}512^{\,m_2 - m_1} = 2{,}512^{\,6 - 1} \approx 100$$</p>
-    <p class="answer"><b>Відповідь:</b> у 100 разів.</p>
-  </details>
-</article>
-
-<!-- ═══════════════ КІНЕЦЬ ЗАДАЧ — нові встав вище цього рядка ═══════════════ -->
-
+    <!-- Як користуватися -->
+    <section class="blok" id="yak">
+      <h2 class="blok-zaholovok">Сад <span class="propys">як тут усе росте</span></h2>
+      <div class="vikno">
+        <ol class="kroky">
+          <li><div><b>Прочитай</b>Відкрий грядку-розділ: рожеві картки — теорія, зелені — задачі.</div></li>
+          <li><div><b>Сховай ключове</b>Формули й головні слова закриються. Згадай, натисни — і перевір себе.</div></li>
+          <li><div><b>Розв’яжи</b>Спробуй задачу сам, потім розкрий покроковий розв’язок. Усі задачі з пошуком — у розділі «Задачі».</div></li>
+          <li><div><b>Забери із собою</b>Друкуй будь-яку сторінку — з розв’язками чи без, збережи картку як зображення або завантаж розділ в Anki.</div></li>
+        </ol>
       </div>
-
-      <div class="empty" id="empty" hidden>
-        <p>За цим запитом задач немає. Спробуй інше слово або іншу тему.</p>
-        <button class="link" type="button" id="reset2">Показати всі задачі</button>
-      </div>
-    </main>
-
-    <!-- ═══════════════ ПІДПИС ═══════════════ -->
-    <footer>
-      <!-- ✏️ 5. Імʼя. Рік не чіпай — він оновлюється сам -->
-      <p>© Дарина Проволовська, <span id="year">2026</span></p>
-    </footer>
+    </section>
 
   </div>
 </div>
 
+
+<!-- ═══════════ ЗБІРНИК УСІХ ЗАДАЧ (заповнюється сам) ═══════════ -->
+<section id="zadachi" data-storinka data-nazva="Задачі">
+  <div class="obgortka rozdil-shapka">
+    <a class="nazad" href="#/">← На головну</a>
+    <span class="mitka" id="zadachi-mitka"></span>
+    <h1>Задачі</h1>
+    <p class="propys">урожай з усіх грядок</p>
+    <div class="filtry">
+      <label class="poshuk">
+        <svg aria-hidden="true"><use href="#i-poshuk"/></svg>
+        <span class="lyshe-chytachu">Пошук задачі</span>
+        <input id="q" type="search" placeholder="Слово, тема або номер…" autocomplete="off" enterkeyhint="search">
+      </label>
+      <div class="hrupa" id="f-predmet" role="group" aria-label="Предмет"></div>
+      <div class="hrupa" id="f-rozdil" role="group" aria-label="Розділ"></div>
+      <div class="hrupa" id="f-riven" role="group" aria-label="Складність"></div>
+      <div class="stan"><span id="stan" role="status" aria-live="polite"></span><button class="lanka" type="button" id="skynuty" hidden>Скинути</button></div>
+    </div>
+    <div class="panel">
+      <button class="knopka" type="button" data-diya="druk">Надрукувати з розв’язками</button>
+      <button class="knopka" type="button" data-diya="druk" data-rozv="0">Надрукувати без розв’язків</button>
+    </div>
+  </div>
+  <div class="obgortka">
+    <div class="kartky" id="spysok-zadach"></div>
+    <div class="porozhn" id="porozhn" hidden>
+      <p>За цим запитом задач немає. Спробуй інше слово або іншу тему.</p>
+      <button class="lanka" type="button" id="skynuty2">Показати всі задачі</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     ФІЗИКА
+     ════════════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════ МЕХАНІКА ═══════════ -->
+<section class="rozdil" id="mekhanika" data-storinka
+         data-nazva="Механіка" data-pidpys="рух і сили" data-predmet="Фізика">
+
+  <article class="kartka">
+    <h3>Рівноприскорений рух</h3>
+    <p class="propys">три формули</p>
+    <p>Швидкість:</p>
+    <p class="formula"><mark>\[ v = v_0 + at \]</mark></p>
+    <p>Переміщення:</p>
+    <p class="formula"><mark>\[ s = v_0 t + \frac{at^2}{2} \]</mark></p>
+    <p>Коли час невідомий:</p>
+    <p class="formula"><mark>\[ v^2 - v_0^2 = 2as \]</mark></p>
+    <p class="prymitka">\(v_0\), \(a\), \(s\) — проєкції на вісь. Напрямок проти осі дає знак «мінус».</p>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Шлях автомобіля</h3>
+    <p>Автомобіль рухається рівномірно зі швидкістю $72$ км/год. Який шлях він проїде за $15$ хв?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Переведемо величини в СІ: $v = 72\ \text{км/год} = 20\ \text{м/с}$, $t = 15\ \text{хв} = 900\ \text{с}$.</p>
+      <p>$$s = vt = 20 \cdot 900 = 18\,000\ \text{м} = 18\ \text{км}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 18 км.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Закони Ньютона</h3>
+    <ol>
+      <li>В інерціальній системі відліку тіло зберігає спокій або рівномірний прямолінійний рух, якщо <mark>рівнодійна сил дорівнює нулю</mark>.</li>
+      <li><mark>\( \vec F = m\vec a \)</mark> — прискорення напрямлене туди ж, куди й рівнодійна.</li>
+      <li>Тіла діють одне на одне із силами, <mark>рівними за модулем і протилежними за напрямком</mark>: \( \vec F_{12} = -\vec F_{21} \).</li>
+    </ol>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Вільне падіння</h3>
+    <p>Тіло вільно падає без початкової швидкості з висоти $45$ м. Скільки часу триває падіння і з якою швидкістю тіло досягне землі? Опором повітря знехтуй, $g = 10\ \text{м/с}^2$.</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Висота пов’язана з часом падіння:</p>
+      <p>$$h = \frac{gt^2}{2} \;\Rightarrow\; t = \sqrt{\frac{2h}{g}} = \sqrt{\frac{2 \cdot 45}{10}} = 3\ \text{с}$$</p>
+      <p>Швидкість у момент падіння:</p>
+      <p>$$v = gt = 10 \cdot 3 = 30\ \text{м/с}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 3 с; 30 м/с.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Робота та енергія</h3>
+    <p>Механічна робота сили:</p>
+    <p class="formula"><mark>\[ A = Fs\cos\alpha \]</mark></p>
+    <p>Кінетична та потенціальна енергія:</p>
+    <p class="formula"><mark>\[ E_k = \frac{mv^2}{2} \qquad E_p = mgh \]</mark></p>
+    <p>У замкненій системі без тертя повна механічна енергія <mark>зберігається</mark>: \( E_k + E_p = \mathrm{const} \).</p>
+  </article>
+
+  <article class="kartka">
+    <h3>Імпульс</h3>
+    <p class="formula"><mark>\[ \vec p = m\vec v \]</mark></p>
+    <p>Зміна імпульсу дорівнює імпульсу сили:</p>
+    <p class="formula"><mark>\[ \vec F\,\Delta t = \Delta \vec p \]</mark></p>
+    <p>У замкненій системі <mark>векторна сума імпульсів</mark> тіл не змінюється.</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Зчеплення вагонів</h3>
+    <p>Вагон масою $20$ т, що рухається зі швидкістю $0{,}5$ м/с, зчіплюється з нерухомим вагоном масою $30$ т. З якою швидкістю рухатимуться вагони після зчеплення?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Система замкнена, тож імпульс зберігається:</p>
+      <p>$$m_1 v_1 = (m_1 + m_2)\,v \;\Rightarrow\; v = \frac{m_1 v_1}{m_1 + m_2} = \frac{20 \cdot 0{,}5}{50} = 0{,}2\ \text{м/с}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 0,2 м/с.</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ МОЛЕКУЛЯРНА ФІЗИКА ═══════════ -->
+<section class="rozdil" id="molekuliarna" data-storinka
+         data-nazva="Молекулярна фізика" data-pidpys="тепло й молекули" data-predmet="Фізика">
+
+  <article class="kartka">
+    <h3>Кількість теплоти</h3>
+    <p class="propys">чотири формули</p>
+    <table>
+      <tbody>
+        <tr><th>Нагрівання</th><td><mark>\( Q = cm\Delta t \)</mark></td></tr>
+        <tr><th>Плавлення</th><td><mark>\( Q = \lambda m \)</mark></td></tr>
+        <tr><th>Пароутворення</th><td><mark>\( Q = Lm \)</mark></td></tr>
+        <tr><th>Згоряння палива</th><td><mark>\( Q = qm \)</mark></td></tr>
+      </tbody>
+    </table>
+    <p class="prymitka">Питома теплоємність води \( c = 4200 \) Дж/(кг·°C).</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Нагрівання води</h3>
+    <p>Яку кількість теплоти потрібно передати воді масою $2$ кг, щоб нагріти її від $20$ °C до $100$ °C? Питома теплоємність води $c = 4200$ Дж/(кг·°C).</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$Q = cm(t_2 - t_1) = 4200 \cdot 2 \cdot (100 - 20) = 672\,000\ \text{Дж} = 672\ \text{кДж}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 672 кДж.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Ідеальний газ</h3>
+    <p class="propys">рівняння стану</p>
+    <p class="formula"><mark>\[ pV = \nu RT \]</mark></p>
+    <p>\( \nu = \dfrac{m}{M} \) — кількість речовини, <mark>\( R = 8{,}31 \) Дж/(моль·К)</mark>.</p>
+    <p>Температура — у <mark>кельвінах</mark>: \( T = t + 273 \).</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Газ у балоні</h3>
+    <p>У балоні об’ємом $50$ л міститься $2$ моль ідеального газу за температури $300$ К. Який тиск газу?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Переведемо об’єм у СІ: $V = 50\ \text{л} = 0{,}05\ \text{м}^3$.</p>
+      <p>$$p = \frac{\nu RT}{V} = \frac{2 \cdot 8{,}31 \cdot 300}{0{,}05} \approx 99\,700\ \text{Па} \approx 100\ \text{кПа}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно 100 кПа.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Термодинаміка</h3>
+    <p>Перший закон: теплота йде на зміну внутрішньої енергії і на роботу газу:</p>
+    <p class="formula"><mark>\[ Q = \Delta U + A' \]</mark></p>
+    <p>ККД теплового двигуна:</p>
+    <p class="formula"><mark>\[ \eta = \frac{Q_1 - Q_2}{Q_1} \]</mark></p>
+    <p>Найбільший можливий — у машини Карно: <mark>\( \eta_{max} = \dfrac{T_1 - T_2}{T_1} \)</mark></p>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>ККД двигуна</h3>
+    <p>Тепловий двигун за цикл отримує від нагрівника $500$ кДж теплоти й віддає холодильнику $350$ кДж. Знайди ККД двигуна.</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$\eta = \frac{Q_1 - Q_2}{Q_1} = \frac{500 - 350}{500} = 0{,}3$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 30 %.</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ ЕЛЕКТРИКА ═══════════ -->
+<section class="rozdil" id="elektryka" data-storinka
+         data-nazva="Електрика" data-pidpys="заряди і струми" data-predmet="Фізика">
+
+  <article class="kartka">
+    <h3>Закон Кулона</h3>
+    <p class="formula"><mark>\[ F = k\,\frac{|q_1|\,|q_2|}{r^2} \]</mark></p>
+    <p>\( k = 9\cdot 10^{9} \) Н·м²/Кл²</p>
+    <p>Однойменні заряди <mark>відштовхуються</mark>, різнойменні — <mark>притягуються</mark>.</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Два заряди</h3>
+    <p>Два точкові заряди по $2$ мкКл розташовані на відстані $30$ см один від одного. З якою силою вони взаємодіють?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$q = 2 \cdot 10^{-6}$ Кл, $r = 0{,}3$ м:</p>
+      <p>$$F = k\frac{q^2}{r^2} = 9 \cdot 10^9 \cdot \frac{(2 \cdot 10^{-6})^2}{0{,}3^2} = \frac{0{,}036}{0{,}09} = 0{,}4\ \text{Н}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 0,4 Н (заряди відштовхуються).</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Закон Ома</h3>
+    <p class="propys">і з'єднання провідників</p>
+    <p class="formula"><mark>\[ I = \frac{U}{R} \]</mark></p>
+    <table>
+      <thead><tr><th></th><th>Послідовне</th><th>Паралельне</th></tr></thead>
+      <tbody>
+        <tr><th>Струм</th><td><mark>\( I = I_1 = I_2 \)</mark></td><td><mark>\( I = I_1 + I_2 \)</mark></td></tr>
+        <tr><th>Напруга</th><td><mark>\( U = U_1 + U_2 \)</mark></td><td><mark>\( U = U_1 = U_2 \)</mark></td></tr>
+        <tr><th>Опір</th><td><mark>\( R = R_1 + R_2 \)</mark></td><td><mark>\( \frac{1}{R} = \frac{1}{R_1} + \frac{1}{R_2} \)</mark></td></tr>
+      </tbody>
+    </table>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Закон Ома</h3>
+    <p>Резистор опором $12$ Ом під’єднали до джерела з напругою $6$ В. Знайди силу струму в резисторі та потужність, яка на ньому виділяється.</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$I = \frac{U}{R} = \frac{6}{12} = 0{,}5\ \text{А}$$</p>
+      <p>$$P = UI = 6 \cdot 0{,}5 = 3\ \text{Вт}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 0,5 А; 3 Вт.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Робота і потужність струму</h3>
+    <p class="formula"><mark>\[ A = UIt \]</mark></p>
+    <p class="formula"><mark>\[ P = UI = I^2R = \frac{U^2}{R} \]</mark></p>
+    <p>Закон Джоуля — Ленца: <mark>\( Q = I^2Rt \)</mark></p>
+    <p class="prymitka">1 кВт·год = 3,6 МДж</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Паралельне з’єднання</h3>
+    <p>Резистори $6$ Ом і $3$ Ом з’єднані паралельно й під’єднані до напруги $12$ В. Знайди загальний опір і силу струму в колі.</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$\frac{1}{R} = \frac{1}{6} + \frac{1}{3} = \frac{1}{2} \;\Rightarrow\; R = 2\ \text{Ом}$$</p>
+      <p>$$I = \frac{U}{R} = \frac{12}{2} = 6\ \text{А}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 2 Ом; 6 А.</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ МАГНЕТИЗМ ═══════════ -->
+<section class="rozdil" id="mahnetyzm" data-storinka
+         data-nazva="Магнетизм" data-pidpys="поля й індукція" data-predmet="Фізика">
+
+  <article class="kartka">
+    <h3>Сили в магнітному полі</h3>
+    <p>Сила Ампера — на провідник зі струмом:</p>
+    <p class="formula"><mark>\[ F_A = BIl\sin\alpha \]</mark></p>
+    <p>Сила Лоренца — на рухомий заряд:</p>
+    <p class="formula"><mark>\[ F_L = qvB\sin\alpha \]</mark></p>
+    <p>Напрямок обох визначає <mark>правило лівої руки</mark>.</p>
+    <p class="prymitka">\(B\) — індукція поля, у теслах (Тл).</p>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Провідник у полі</h3>
+    <p>Провідник завдовжки $40$ см, по якому тече струм $5$ А, розміщений перпендикулярно до ліній магнітного поля з індукцією $0{,}2$ Тл. Яка сила діє на провідник?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Кут між провідником і лініями поля $90°$, тому $\sin\alpha = 1$:</p>
+      <p>$$F_A = BIl = 0{,}2 \cdot 5 \cdot 0{,}4 = 0{,}4\ \text{Н}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 0,4 Н.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Електромагнітна індукція</h3>
+    <p>Магнітний потік:</p>
+    <p class="formula"><mark>\[ \Phi = BS\cos\alpha \]</mark></p>
+    <p>ЕРС індукції в контурі:</p>
+    <p class="formula"><mark>\[ \mathcal{E} = -\frac{\Delta\Phi}{\Delta t} \]</mark></p>
+    <p>Правило Ленца: індукційний струм <mark>протидіє зміні</mark> магнітного потоку, що його спричинила.</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>ЕРС індукції</h3>
+    <p>Магнітний потік через контур рівномірно зменшився від $0{,}06$ Вб до $0{,}02$ Вб за $0{,}02$ с. Яка ЕРС індукції в контурі?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$|\mathcal{E}| = \frac{|\Delta\Phi|}{\Delta t} = \frac{0{,}06 - 0{,}02}{0{,}02} = 2\ \text{В}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 2 В.</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ КОЛИВАННЯ І ХВИЛІ ═══════════ -->
+<section class="rozdil" id="kolyvannia" data-storinka
+         data-nazva="Коливання і хвилі" data-pidpys="ритм і поширення" data-predmet="Фізика">
+
+  <article class="kartka">
+    <h3>Коливання</h3>
+    <p>Період і частота: <mark>\( T = \dfrac{1}{\nu} \)</mark>, циклічна частота \( \omega = 2\pi\nu \).</p>
+    <p>Математичний маятник:</p>
+    <p class="formula"><mark>\[ T = 2\pi\sqrt{\frac{l}{g}} \]</mark></p>
+    <p>Пружинний маятник:</p>
+    <p class="formula"><mark>\[ T = 2\pi\sqrt{\frac{m}{k}} \]</mark></p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Маятник</h3>
+    <p>Знайди період коливань математичного маятника завдовжки $2{,}5$ м. Вважай $g = 10\ \text{м/с}^2$.</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$T = 2\pi\sqrt{\frac{l}{g}} = 2\pi\sqrt{\frac{2{,}5}{10}} = 2\pi \cdot 0{,}5 = \pi \approx 3{,}14\ \text{с}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно 3,14 с.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Хвилі</h3>
+    <p class="formula"><mark>\[ v = \lambda\nu = \frac{\lambda}{T} \]</mark></p>
+    <ul>
+      <li>Звук у повітрі: <mark>≈ 340 м/с</mark></li>
+      <li>Світло у вакуумі: <mark>\( c = 3\cdot 10^{8} \) м/с</mark></li>
+    </ul>
+    <p>Звук — <mark>поздовжня</mark> механічна хвиля, у вакуумі не поширюється. Світло — <mark>поперечна</mark> електромагнітна.</p>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Довжина звукової хвилі</h3>
+    <p>Камертон звучить з частотою $680$ Гц. Яка довжина звукової хвилі в повітрі, якщо швидкість звуку $340$ м/с?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$\lambda = \frac{v}{\nu} = \frac{340}{680} = 0{,}5\ \text{м}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 0,5 м.</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ ОПТИКА ═══════════ -->
+<section class="rozdil" id="optyka" data-storinka
+         data-nazva="Оптика" data-pidpys="світло й лінзи" data-predmet="Фізика">
+
+  <article class="kartka">
+    <h3>Відбивання і заломлення</h3>
+    <p>Кут відбивання <mark>дорівнює куту падіння</mark>.</p>
+    <p>Показник заломлення середовища:</p>
+    <p class="formula"><mark>\[ n = \frac{c}{v} \]</mark></p>
+    <p>Закон заломлення:</p>
+    <p class="formula"><mark>\[ \frac{\sin\alpha}{\sin\gamma} = \frac{n_2}{n_1} \]</mark></p>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Світло у склі</h3>
+    <p>Показник заломлення скла $1{,}5$. З якою швидкістю світло поширюється у склі?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$v = \frac{c}{n} = \frac{3 \cdot 10^8}{1{,}5} = 2 \cdot 10^8\ \text{м/с}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> $2 \cdot 10^8$ м/с.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Тонка лінза</h3>
+    <p class="formula"><mark>\[ \frac{1}{F} = \frac{1}{d} + \frac{1}{f} \]</mark></p>
+    <p>Оптична сила <mark>\( D = \dfrac{1}{F} \)</mark>, у діоптріях (дптр), \(F\) — у метрах.</p>
+    <p>Збільшення: <mark>\( \Gamma = \dfrac{f}{d} \)</mark></p>
+    <p class="prymitka">\(d\) — відстань до предмета, \(f\) — до зображення. Для розсіювальної лінзи \(F &lt; 0\).</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Збиральна лінза</h3>
+    <p>Предмет розташований на відстані $30$ см від збиральної лінзи з фокусною відстанню $20$ см. На якій відстані від лінзи утвориться зображення і яким воно буде?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>З формули тонкої лінзи, де $d$ — відстань до предмета, $f$ — до зображення:</p>
+      <p>$$\frac{1}{F} = \frac{1}{d} + \frac{1}{f} \;\Rightarrow\; \frac{1}{f} = \frac{1}{20} - \frac{1}{30} = \frac{1}{60}, \quad f = 60\ \text{см}$$</p>
+      <p>Збільшення $\Gamma = \dfrac{f}{d} = \dfrac{60}{30} = 2$. Оскільки $f > 0$, зображення дійсне й перевернуте.</p>
+      <p class="vidpovid"><b>Відповідь:</b> 60 см від лінзи; зображення дійсне, перевернуте, збільшене вдвічі.</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ АТОМНА І ЯДЕРНА ФІЗИКА ═══════════ -->
+<section class="rozdil" id="atom" data-storinka
+         data-nazva="Атом і ядро" data-pidpys="кванти та розпад" data-predmet="Фізика">
+
+  <article class="kartka">
+    <h3>Фотон і фотоефект</h3>
+    <p>Енергія фотона:</p>
+    <p class="formula"><mark>\[ E = h\nu = \frac{hc}{\lambda} \]</mark></p>
+    <p>Рівняння Ейнштейна для фотоефекту:</p>
+    <p class="formula"><mark>\[ h\nu = A_{\text{вих}} + \frac{mv^2}{2} \]</mark></p>
+    <p class="prymitka">Стала Планка \( h = 6{,}63\cdot 10^{-34} \) Дж·с.</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Енергія фотона</h3>
+    <p>Знайди енергію фотона зеленого світла з довжиною хвилі $500$ нм.</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$\lambda = 5 \cdot 10^{-7}$ м:</p>
+      <p>$$E = \frac{hc}{\lambda} = \frac{6{,}63 \cdot 10^{-34} \cdot 3 \cdot 10^{8}}{5 \cdot 10^{-7}} \approx 4 \cdot 10^{-19}\ \text{Дж}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно $4 \cdot 10^{-19}$ Дж.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Радіоактивний розпад</h3>
+    <p>Закон радіоактивного розпаду:</p>
+    <p class="formula"><mark>\[ N = N_0 \cdot 2^{-t/T} \]</mark></p>
+    <p>\(T\) — <mark>період напіврозпаду</mark>: за цей час розпадається половина ядер.</p>
+    <p>Зв’язок маси й енергії: <mark>\( E = mc^2 \)</mark></p>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Період напіврозпаду</h3>
+    <p>Період напіврозпаду ізотопу — $8$ діб. Яка частка початкових ядер залишиться через $24$ доби?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>За $24$ доби минає $24 : 8 = 3$ періоди напіврозпаду:</p>
+      <p>$$\frac{N}{N_0} = 2^{-3} = \frac{1}{8}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 1/8, тобто 12,5 %.</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     АСТРОНОМІЯ
+     ════════════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════ НЕБЕСНА СФЕРА ═══════════ -->
+<section class="rozdil" id="nebesna-sfera" data-storinka
+         data-nazva="Небесна сфера" data-pidpys="координати й час" data-predmet="Астрономія">
+
+  <article class="kartka">
+    <h3>Точки й лінії неба</h3>
+    <ul>
+      <li><mark>Зеніт</mark> — точка просто над головою, надир — протилежна.</li>
+      <li><mark>Небесний екватор</mark> — продовження земного екватора на небо.</li>
+      <li><mark>Екліптика</mark> — видимий річний шлях Сонця серед зір.</li>
+    </ul>
+    <p>Висота полюса світу над горизонтом <mark>дорівнює географічній широті</mark>: \( h_P = \varphi \).</p>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Полярна над Києвом</h3>
+    <p>На якій висоті над горизонтом видно Полярну зорю в Києві (широта $50{,}5°$)? Вважай, що Полярна збігається з полюсом світу.</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Висота полюса світу дорівнює широті місця: $h = \varphi = 50{,}5°$.</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно 50,5°.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Кульмінація</h3>
+    <p>Висота світила у верхній кульмінації (на південь від зеніту):</p>
+    <p class="formula"><mark>\[ h = 90^\circ - \varphi + \delta \]</mark></p>
+    <p>\( \delta \) — <mark>схилення</mark> світила, \( \varphi \) — широта.</p>
+    <p class="prymitka">Схилення Сонця змінюється від −23,4° (грудень) до +23,4° (червень).</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Сонце опівдні</h3>
+    <p>На якій висоті буде Сонце в Києві ($\varphi = 50{,}5°$) опівдні 21 червня, коли його схилення $+23{,}4°$?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$h = 90° - \varphi + \delta = 90° - 50{,}5° + 23{,}4° = 62{,}9°$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно 63°.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Доба і час</h3>
+    <ul>
+      <li>Сонячна доба — <mark>24 год</mark>.</li>
+      <li>Зоряна доба — <mark>23 год 56 хв</mark>: період обертання Землі відносно зір.</li>
+    </ul>
+    <p>Тому зорі сходять щодня приблизно на <mark>4 хв раніше</mark>.</p>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ НЕБЕСНА МЕХАНІКА ═══════════ -->
+<section class="rozdil" id="nebesna-mekhanika" data-storinka
+         data-nazva="Небесна механіка" data-pidpys="орбіти й тяжіння" data-predmet="Астрономія">
+
+  <article class="kartka">
+    <h3>Закони Кеплера</h3>
+    <figure>
+      <svg viewBox="0 0 340 200" role="img" aria-label="Еліптична орбіта планети із Сонцем у фокусі">
+        <g fill="none" stroke="#2a2325" stroke-width="1.4">
+          <ellipse cx="170" cy="95" rx="130" ry="80"/>
+          <path d="M40 95H300" stroke-dasharray="3 4" stroke-width="1"/>
+        </g>
+        <g fill="#4b5b37" fill-opacity=".45" stroke="#2a2325" stroke-width="1">
+          <path d="M67.5 95 57.4 55A130 80 0 0 0 57.4 135Z"/>
+          <path d="M67.5 95 299.7 89.6A130 80 0 0 1 299.7 100.4Z"/>
+        </g>
+        <circle cx="67.5" cy="95" r="7" fill="#2a2325"/>
+        <g font-family="Onest,sans-serif" font-size="12" fill="#2a2325">
+          <text x="80" y="84">Сонце</text>
+          <text x="14" y="192">перигелій</text>
+          <text x="326" y="192" text-anchor="end">афелій</text>
+          <text x="178" y="88">2a</text>
+        </g>
+      </svg>
+      <figcaption>Зафарбовані площі рівні</figcaption>
+    </figure>
+    <ol>
+      <li>Орбіта планети — <mark>еліпс</mark>, Сонце в одному з його <mark>фокусів</mark>.</li>
+      <li>Радіус-вектор планети за рівні проміжки часу описує <mark>рівні площі</mark>.</li>
+      <li><mark>\( \dfrac{T_1^2}{T_2^2} = \dfrac{a_1^3}{a_2^3} \)</mark></li>
+    </ol>
+    <p class="prymitka">Для тіл Сонячної системи, якщо \(T\) у роках, а \(a\) в а. о.: \( T^2 = a^3 \).</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Рік на Марсі</h3>
+    <p>Велика піввісь орбіти Марса дорівнює $1{,}52$ а. о. Знайди період обертання Марса навколо Сонця в земних роках.</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Порівняємо Марс із Землею за третім законом Кеплера ($a_\oplus = 1$ а. о., $T_\oplus = 1$ рік):</p>
+      <p>$$\frac{T^2}{T_\oplus^2} = \frac{a^3}{a_\oplus^3} \;\Rightarrow\; T = \sqrt{1{,}52^3} \approx 1{,}87\ \text{року}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно 1,87 земного року.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Всесвітнє тяжіння</h3>
+    <p class="formula"><mark>\[ F = G\,\frac{Mm}{r^2} \]</mark></p>
+    <p>\( G = 6{,}67\cdot 10^{-11} \) Н·м²/кг²</p>
+    <p>Перша космічна швидкість (колова орбіта біля поверхні):</p>
+    <p class="formula"><mark>\[ v_1 = \sqrt{\frac{GM}{R}} \]</mark></p>
+    <p>Для Землі <mark>\( v_1 \approx 7{,}9 \) км/с</mark>, друга космічна <mark>\( v_2 = \sqrt{2}\,v_1 \approx 11{,}2 \) км/с</mark>.</p>
+  </article>
+
+  <article class="zadacha" data-level="3">
+    <h3>Супутник Місяця</h3>
+    <p>Маса Місяця $7{,}35 \cdot 10^{22}$ кг, радіус $1740$ км. З якою швидкістю має рухатися штучний супутник по коловій орбіті біля самої поверхні Місяця?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Сила тяжіння надає супутнику доцентрового прискорення, звідки перша космічна швидкість:</p>
+      <p>$$v_1 = \sqrt{\frac{GM}{R}} = \sqrt{\frac{6{,}67 \cdot 10^{-11} \cdot 7{,}35 \cdot 10^{22}}{1{,}74 \cdot 10^{6}}} \approx 1{,}7 \cdot 10^{3}\ \text{м/с}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно 1,7 км/с.</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ СОНЯЧНА СИСТЕМА ═══════════ -->
+<section class="rozdil" id="soniachna-systema" data-storinka
+         data-nazva="Сонячна система" data-pidpys="наше космічне подвір’я" data-predmet="Астрономія">
+
+  <article class="kartka">
+    <h3>Дві родини планет</h3>
+    <table>
+      <thead><tr><th></th><th>Земна група</th><th>Гіганти</th></tr></thead>
+      <tbody>
+        <tr><th>Хто</th><td><mark>Меркурій, Венера, Земля, Марс</mark></td><td><mark>Юпітер, Сатурн, Уран, Нептун</mark></td></tr>
+        <tr><th>Будова</th><td>тверді, кам’яні</td><td><mark>газові та крижані</mark></td></tr>
+        <tr><th>Супутники</th><td>мало або немає</td><td>десятки, є кільця</td></tr>
+      </tbody>
+    </table>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Світло від Сонця</h3>
+    <p>Скільки часу світло йде від Сонця до Землі? Відстань — $1$ а. о. $\approx 1{,}5 \cdot 10^{11}$ м.</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$t = \frac{r}{c} = \frac{1{,}5 \cdot 10^{11}}{3 \cdot 10^{8}} = 500\ \text{с} \approx 8{,}3\ \text{хв}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно 8,3 хв.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Сонце</h3>
+    <ul>
+      <li>Температура поверхні <mark>≈ 5800 К</mark></li>
+      <li>Джерело енергії — <mark>термоядерний синтез</mark> гелію з водню в ядрі</li>
+      <li>Вік <mark>≈ 4,6 млрд років</mark></li>
+    </ul>
+    <p class="prymitka">Сонце — жовтий карлик спектрального класу G2.</p>
+  </article>
+
+  <article class="kartka">
+    <h3>Місяць і затемнення</h3>
+    <p>Синодичний місяць (зміна фаз) <mark>≈ 29,5 доби</mark>.</p>
+    <p>Сонячне затемнення буває лише в <mark>новий місяць</mark>, місячне — лише <mark>в повню</mark>.</p>
+    <p>Синодичний період планети \(S\) і сидеричний \(T\) (для зовнішніх планет, \(T_\oplus = 1\) рік):</p>
+    <p class="formula"><mark>\[ \frac{1}{S} = \frac{1}{T_\oplus} - \frac{1}{T} \]</mark></p>
+  </article>
+
+  <article class="zadacha" data-level="3">
+    <h3>Протистояння Марса</h3>
+    <p>Сидеричний період Марса $1{,}88$ року. Через скільки часу повторюються протистояння Марса?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Протистояння повторюються через синодичний період:</p>
+      <p>$$\frac{1}{S} = \frac{1}{1} - \frac{1}{1{,}88} \approx 0{,}468 \;\Rightarrow\; S \approx 2{,}14\ \text{року}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно через 2,14 року (≈ 780 діб).</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ ВІДСТАНІ ДО ЗІР ═══════════ -->
+<section class="rozdil" id="vidstani" data-storinka
+         data-nazva="Відстані й блиск" data-pidpys="паралакс і величини" data-predmet="Астрономія">
+
+  <article class="kartka">
+    <h3>Одиниці відстаней</h3>
+    <ul>
+      <li>1 а. о. ≈ <mark>149,6 млн км</mark></li>
+      <li>1 св. рік ≈ <mark>9,46·10¹² км</mark> ≈ 63 240 а. о.</li>
+      <li>1 пк ≈ <mark>3,26 св. року</mark> ≈ 206 265 а. о.</li>
+    </ul>
+    <p>Відстань за річним паралаксом:</p>
+    <p class="formula"><mark>\[ r = \frac{1}{\pi''} \]</mark></p>
+    <p class="prymitka">\(r\) у парсеках, \(\pi''\) у кутових секундах.</p>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Паралакс зорі</h3>
+    <p>Річний паралакс зорі дорівнює $0{,}25''$. Яка відстань до неї в парсеках і світлових роках?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>Відстань у парсеках обернена до паралакса в кутових секундах:</p>
+      <p>$$r = \frac{1}{p} = \frac{1}{0{,}25} = 4\ \text{пк}$$</p>
+      <p>Один парсек — це приблизно $3{,}26$ світлового року, тож $r \approx 4 \cdot 3{,}26 \approx 13$ св. р.</p>
+      <p class="vidpovid"><b>Відповідь:</b> 4 пк, або приблизно 13 світлових років.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Зоряні величини</h3>
+    <p>Формула Погсона:</p>
+    <p class="formula"><mark>\[ m_1 - m_2 = -2{,}5\,\lg\frac{E_1}{E_2} \]</mark></p>
+    <p>Різниця в 5 величин — це різниця освітленостей рівно у <mark>100 разів</mark>. Що яскравіша зоря, то <mark>менша</mark> її зоряна величина.</p>
+    <p>Модуль відстані:</p>
+    <p class="formula"><mark>\[ m - M = 5\lg r - 5 \]</mark></p>
+    <p class="prymitka">\(r\) у парсеках, \(M\) — абсолютна зоряна величина (видима з 10 пк).</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Наскільки яскравіша зоря</h3>
+    <p>У скільки разів зоря першої зоряної величини яскравіша за зорю шостої величини?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>За формулою Погсона різниця в одну зоряну величину відповідає відношенню освітленостей $2{,}512$:</p>
+      <p>$$\frac{E_1}{E_2} = 2{,}512^{\,m_2 - m_1} = 2{,}512^{\,6 - 1} \approx 100$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> у 100 разів.</p>
+    </details>
+  </article>
+
+  <article class="zadacha" data-level="3">
+    <h3>Модуль відстані</h3>
+    <p>Видима зоряна величина зорі $m = 7$, абсолютна $M = 2$. На якій відстані від нас зоря?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$m - M = 5\lg r - 5 \;\Rightarrow\; 5 = 5\lg r - 5 \;\Rightarrow\; \lg r = 2$$</p>
+      <p>$$r = 10^2 = 100\ \text{пк}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 100 пк (≈ 326 св. р.).</p>
+    </details>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ ЗОРІ ═══════════ -->
+<section class="rozdil" id="zori" data-storinka
+         data-nazva="Зорі" data-pidpys="як вони живуть" data-predmet="Астрономія">
+
+  <article class="kartka">
+    <h3>Колір і температура</h3>
+    <p>Спектральні класи від гарячих до холодних:</p>
+    <p class="formula"><mark>O B A F G K M</mark></p>
+    <p>Закон Віна — що гарячіша зоря, то коротша хвиля максимуму випромінювання:</p>
+    <p class="formula"><mark>\[ \lambda_{max} = \frac{b}{T} \]</mark></p>
+    <p class="prymitka">\( b = 2{,}9\cdot 10^{-3} \) м·К</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Максимум випромінювання</h3>
+    <p>Температура поверхні Сонця $5800$ К. На яку довжину хвилі припадає максимум його випромінювання?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$\lambda_{max} = \frac{b}{T} = \frac{2{,}9 \cdot 10^{-3}}{5800} = 5 \cdot 10^{-7}\ \text{м} = 500\ \text{нм}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 500 нм — зелено-блакитна частина спектра.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Світність</h3>
+    <p class="propys">закон Стефана — Больцмана</p>
+    <p class="formula"><mark>\[ L = 4\pi R^2 \sigma T^4 \]</mark></p>
+    <p>Світність зростає як <mark>квадрат радіуса</mark> і <mark>четвертий степінь температури</mark>.</p>
+    <p class="prymitka">\( \sigma = 5{,}67\cdot 10^{-8} \) Вт/(м²·К⁴)</p>
+  </article>
+
+  <article class="zadacha" data-level="3">
+    <h3>Зоря-порівняння</h3>
+    <p>Радіус зорі вдвічі більший за сонячний, а температура поверхні вдвічі менша. У скільки разів її світність відрізняється від сонячної?</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$\frac{L}{L_\odot} = \left(\frac{R}{R_\odot}\right)^2 \left(\frac{T}{T_\odot}\right)^4 = 2^2 \cdot \left(\frac{1}{2}\right)^4 = \frac{4}{16} = \frac{1}{4}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> світність у 4 рази менша за сонячну.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Еволюція зір</h3>
+    <p>Долю зорі визначає її <mark>маса</mark>.</p>
+    <ul>
+      <li>Більшість життя зоря проводить на <mark>головній послідовності</mark> діаграми Герцшпрунга — Рассела.</li>
+      <li>Зорі як Сонце: червоний гігант → <mark>білий карлик</mark>.</li>
+      <li>Масивні зорі: наднова → <mark>нейтронна зоря або чорна діра</mark>.</li>
+    </ul>
+  </article>
+
+</section>
+
+
+<!-- ═══════════ ГАЛАКТИКИ ═══════════ -->
+<section class="rozdil" id="halaktyky" data-storinka
+         data-nazva="Галактики" data-pidpys="і весь Всесвіт" data-predmet="Астрономія">
+
+  <article class="kartka">
+    <h3>Чумацький Шлях</h3>
+    <ul>
+      <li>Спіральна галактика з <mark>перемичкою (баром)</mark></li>
+      <li>Діаметр диска <mark>≈ 100 тис. св. років</mark></li>
+      <li>Сонце — <mark>≈ 26 тис. св. років</mark> від центру</li>
+      <li>Сотні мільярдів зір</li>
+    </ul>
+    <p>Типи галактик за Габблом: <mark>еліптичні, спіральні, неправильні</mark>.</p>
+  </article>
+
+  <article class="zadacha" data-level="1">
+    <h3>Швидкість галактики</h3>
+    <p>Галактика розташована на відстані $200$ Мпк. З якою швидкістю вона віддаляється від нас? Стала Габбла $H_0 = 70$ км/(с·Мпк).</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$v = H_0 r = 70 \cdot 200 = 14\,000\ \text{км/с}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> 14 000 км/с.</p>
+    </details>
+  </article>
+
+  <article class="kartka">
+    <h3>Закон Габбла</h3>
+    <p>Далекі галактики віддаляються зі швидкістю, <mark>пропорційною відстані</mark>:</p>
+    <p class="formula"><mark>\[ v = H_0\,r \]</mark></p>
+    <p>\( H_0 \approx 70 \) км/(с·Мпк). Для малих червоних зміщень <mark>\( v = cz \)</mark>.</p>
+    <p>Вік Всесвіту <mark>≈ 13,8 млрд років</mark>; реліктове випромінювання має температуру <mark>≈ 2,7 К</mark>.</p>
+  </article>
+
+  <article class="zadacha" data-level="2">
+    <h3>Червоне зміщення</h3>
+    <p>Червоне зміщення в спектрі галактики $z = 0{,}01$. Оціни відстань до неї ($H_0 = 70$ км/(с·Мпк)).</p>
+    <details>
+      <summary>Розв’язок</summary>
+      <p>$$v = cz = 3 \cdot 10^{5} \cdot 0{,}01 = 3000\ \text{км/с}$$</p>
+      <p>$$r = \frac{v}{H_0} = \frac{3000}{70} \approx 43\ \text{Мпк}$$</p>
+      <p class="vidpovid"><b>Відповідь:</b> приблизно 43 Мпк.</p>
+    </details>
+  </article>
+
+</section>
+
+<!-- ═══════════ КІНЕЦЬ РОЗДІЛІВ — нові вставляйте вище цього рядка ═══════════ -->
+
+</main>
+
+<footer class="nyz">
+  <div class="obgortka">
+    <span>© Дарина Проволовська, <span id="rik">2026</span></span>
+    <a href="#/">На головну</a>
+  </div>
+</footer>
+
+<dialog class="velyke" id="velyke" aria-label="Розгорнута картка"></dialog>
+<div class="spovishchennia" id="spovishchennia" role="status" aria-live="polite" hidden></div>
+
+<noscript><p style="padding:1rem;background:#fbe6ee;color:#2a2325">Щоб працювали меню, формули, пошук і експорт, увімкніть JavaScript.</p></noscript>
+
 <script>
-/* Рік у підписі — завжди поточний */
-document.getElementById('year').textContent = new Date().getFullYear();
+(function () {
+  'use strict';
 
-/* ───────── Усе нижче працює саме, редагувати не потрібно ───────── */
-(() => {
-  const LEVELS = { 1: 'легка', 2: 'середня', 3: 'складна' };
-
-  const $ = id => document.getElementById(id);
-  const tasks = [...document.querySelectorAll('#tasks .task')];
-  const input = $('q'), segs = $('segments'), topicsBox = $('topics');
-  const state = { subject: null, topic: null };
-
-  const norm = s => s.toLowerCase().replace(/[’ʼ`]/g, "'").replace(/\s+/g, ' ').trim();
-  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
-  const plural = (n, [one, few, many]) => {
-    const a = n % 10, b = n % 100;
-    return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many;
+  var NAZVA_SAITU = 'Астрофізичний сад';
+  var KOLODA_ANKI = 'Фізика та астрономія';   // назва колоди в Anki (розділ додається автоматично)
+  var PREDMETY = {
+    'Фізика':     { id: 'fizyka',      pidpys: 'закони, що рухають світ' },
+    'Астрономія': { id: 'astronomiya', pidpys: 'небо над садом' }
   };
-  const toTasks = () => $('find').scrollIntoView({ block: 'start' });
+  var RIVNI = { 1: 'легка', 2: 'середня', 3: 'складна' };
+  var F_KARTKY = ['картка', 'картки', 'карток'];
+  var F_ZADACHI = ['задача', 'задачі', 'задач'];
+  var F_ROZDILY = ['розділ', 'розділи', 'розділів'];
+  var F_PREDMETY = ['предмет', 'предмети', 'предметів'];
 
-  /* 1. Номер, тема і складність на кожній задачі + дерево тем */
-  const tree = new Map();                       // предмет → (тема → кількість)
-  const width = Math.max(2, String(tasks.length).length);
-  tasks.forEach((task, i) => {
-    const subject = task.dataset.subject || 'Інше';
-    const topic   = task.dataset.topic   || 'Без теми';
-    const level   = Math.min(3, Math.max(1, +task.dataset.level || 1));
-    task.dataset.subject = subject; task.dataset.topic = topic;
-    task.id = 'z' + (i + 1);
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-    if (!tree.has(subject)) tree.set(subject, new Map());
-    const topics = tree.get(subject);
-    topics.set(topic, (topics.get(topic) || 0) + 1);
+  var rozdily = $$('section.rozdil');
+  var dzherelo = new Map();      // картка → її початковий HTML (для Anki)
+  var usiZadachi = [];
 
-    task.dataset.search = norm(`№${i + 1} ${i + 1} ${subject} ${topic} ${task.textContent}`);
+  document.getElementById('rik').textContent = new Date().getFullYear();
 
-    const body = el('div', 'task-body');
-    body.append(...task.childNodes);
-    const num = el('span', 'task-num', String(i + 1).padStart(width, '0'));
-    num.setAttribute('aria-label', 'Задача ' + (i + 1));
-    const meta = el('div', 'task-meta');
-    meta.append(el('span', 'task-topic', topic), el('span', 'task-level', LEVELS[level]));
-    meta.lastChild.title = 'Складність';
-    task.append(num, meta, body);
-  });
-
-  /* 2. Числа у розділі «Про збірник» */
-  const topicCount = [...tree.values()].reduce((n, t) => n + t.size, 0);
-  const stat = (key, n, forms) => { $('n-' + key).textContent = n; $('l-' + key).textContent = plural(n, forms); };
-  stat('tasks', tasks.length, ['задача', 'задачі', 'задач']);
-  stat('topics', topicCount, ['тема', 'теми', 'тем']);
-  stat('subjects', tree.size, ['предмет', 'предмети', 'предметів']);
-
-  /* 3. Перемикач предметів, посилання в шапці та теми */
-  const pick = subject => { state.subject = subject; state.topic = null; apply(); };
-  const segBtn = (label, subject) => {
-    const b = el('button', '', label); b.type = 'button';
-    b.onclick = () => pick(subject);
-    b._subject = subject; segs.append(b);
-  };
-  segBtn('Усе', null);
-  tree.forEach((topics, subject) => {
-    segBtn(subject, subject);
-    const a = el('a', '', subject); a.href = '#find';
-    a.onclick = () => pick(subject);
-    $('nav-subjects').append(a);
-
-    topics.forEach((count, topic) => {
-      const b = el('button', 'topic'); b.type = 'button';
-      b.append(el('span', 'name', topic), el('span', 'count', count));
-      b._subject = subject; b._key = subject + '|' + topic;
-      b.onclick = () => { state.topic = state.topic === b._key ? null : b._key; apply(); };
-      topicsBox.append(b);
-    });
-  });
-
-  /* 4. Фільтр */
-  function apply() {
-    const words = norm(input.value).split(' ').filter(Boolean);
-    let shown = 0;
-    tasks.forEach(task => {
-      const key = task.dataset.subject + '|' + task.dataset.topic;
-      const ok = (!state.subject || task.dataset.subject === state.subject)
-              && (!state.topic || key === state.topic)
-              && words.every(w => task.dataset.search.includes(w));
-      task.hidden = !ok; if (ok) shown++;
-    });
-    [...segs.children].forEach(b => b.setAttribute('aria-pressed', b._subject === state.subject));
-    [...topicsBox.children].forEach(b => {
-      b.hidden = !!state.subject && b._subject !== state.subject;
-      b.setAttribute('aria-pressed', b._key === state.topic);
-    });
-
-    const filtered = !!(state.subject || state.topic || words.length);
-    $('status').textContent = `Показано ${shown} із ${tasks.length}`;
-    $('reset').hidden = !filtered;
-    $('empty').hidden = shown > 0;
+  function forma(n, f) {
+    var a = n % 10, b = n % 100;
+    return a === 1 && b !== 11 ? f[0] : a >= 2 && a <= 4 && (b < 12 || b > 14) ? f[1] : f[2];
   }
-  function reset() { state.subject = state.topic = null; input.value = ''; apply(); }
+  function skilky(n, f) { return n + ' ' + forma(n, f); }
+  function znaky() { return '<span class="znaky" aria-hidden="true"><i></i><i></i><i></i></span>'; }
+  function el(teg, klas, html) {
+    var e = document.createElement(teg);
+    if (klas) e.className = klas;
+    if (html != null) e.innerHTML = html;
+    return e;
+  }
+  function tekst(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function norm(s) { return s.toLowerCase().replace(/[’ʼ`]/g, "'").replace(/\s+/g, ' ').trim(); }
+  function rivniHtml(r) {
+    var s = '<span class="rivni" aria-hidden="true">';
+    for (var i = 1; i <= 3; i++) s += '<i' + (i <= r ? ' class="t"' : '') + '></i>';
+    return s + '</span>';
+  }
+  function obhornuty(k, shapka, dii) {
+    k.classList.add('vikno', 'element');
+    var tilo = el('div', 'tilo');
+    while (k.firstChild) tilo.appendChild(k.firstChild);
+    k.appendChild(el('div', 'shapka', shapka));
+    k.appendChild(tilo);
+    k.appendChild(el('div', 'dii', dii));
+  }
 
-  input.addEventListener('input', apply);
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { input.blur(); toTasks(); }
-    if (e.key === 'Escape') { input.value = ''; apply(); }
+  /* ── 1. Грядки: картки й задачі в кожному розділі ── */
+  var vsogoZadach = $$('section.rozdil > .zadacha').length;
+  var shyryna = Math.max(2, String(vsogoZadach).length);
+  var nomer = 0;
+
+  rozdily.forEach(function (r) {
+    var d = r.dataset, nK = 0, nZ = 0;
+
+    $$(':scope > .kartka, :scope > .zadacha', r).forEach(function (k) {
+      if (k.classList.contains('kartka')) {
+        nK++;
+        dzherelo.set(k, k.innerHTML);
+        if (!k.id) k.id = r.id + '-' + nK;
+        k.dataset.id = k.id;
+        obhornuty(k, znaky() + '<span class="mitka">' + tekst(d.nazva) + '</span>',
+          '<button class="knopka" type="button" data-diya="rozhornuty">Розгорнути</button>' +
+          '<button class="knopka" type="button" data-diya="png">Зберегти як зображення</button>');
+      } else {
+        nZ++; nomer++;
+        var riv = Math.min(3, Math.max(1, +k.dataset.level || 1));
+        var n = String(nomer).padStart(shyryna, '0');
+        var poshuk = norm('№' + nomer + ' ' + nomer + ' ' + n + ' ' + d.predmet + ' ' + d.nazva + ' ' + RIVNI[riv] + ' ' + k.textContent);
+        obhornuty(k, rivniHtml(riv) + '<span class="mitka">Задача ' + n + ' · ' + RIVNI[riv] + '</span>',
+          '<button class="knopka" type="button" data-diya="rozhornuty">Розгорнути</button>');
+        k.setAttribute('aria-label', 'Задача ' + nomer);
+        usiZadachi.push({ vuzol: k, rozdil: r, nomer: nomer, riven: riv, poshuk: poshuk });
+      }
+    });
+    r.dataset.kartok = nK; r.dataset.zadach = nZ; r.dataset.vyd = 'use';
+
+    var predmet = PREDMETY[d.predmet] || { id: '' };
+    var shapka = el('div', 'obgortka rozdil-shapka',
+      '<a class="nazad" href="#/' + (predmet.id || '') + '">← ' + tekst(d.predmet || 'Головна') + '</a>' +
+      '<span class="mitka">' + tekst(d.predmet || '') + ' · ' + skilky(nK, F_KARTKY) + ' · ' + skilky(nZ, F_ZADACHI) + '</span>' +
+      '<h1>' + tekst(d.nazva) + '</h1>' +
+      (d.pidpys ? '<p class="propys">' + tekst(d.pidpys) + '</p>' : '') +
+      '<div class="panel">' +
+        '<span class="hrupa" role="group" aria-label="Показати">' +
+          '<button class="knopka" type="button" data-diya="vyd" data-vyd="use" aria-pressed="true">Усе</button>' +
+          '<button class="knopka" type="button" data-diya="vyd" data-vyd="kartky" aria-pressed="false">Картки</button>' +
+          '<button class="knopka" type="button" data-diya="vyd" data-vyd="zadachi" aria-pressed="false">Задачі</button>' +
+        '</span>' +
+        '<span class="rozdilnyk" aria-hidden="true"></span>' +
+        '<button class="knopka" type="button" data-diya="skhovaty" aria-pressed="false">Сховати ключове</button>' +
+        '<button class="knopka" type="button" data-diya="anki">Завантажити для Anki</button>' +
+        '<button class="knopka" type="button" data-diya="druk">Надрукувати</button>' +
+        (nZ ? '<button class="knopka" type="button" data-diya="druk" data-rozv="0">Друк без розв’язків</button>' : '') +
+      '</div>');
+    var sitka = el('div', 'obgortka');
+    var kolonky = el('div', 'kartky');
+    $$(':scope > .element', r).forEach(function (k) { kolonky.appendChild(k); });
+    sitka.appendChild(kolonky);
+    r.appendChild(shapka);
+    r.appendChild(sitka);
   });
-  document.addEventListener('keydown', e => {
-    if (e.key === '/' && document.activeElement !== input) { e.preventDefault(); input.focus(); }
+
+  function plytka(r) {
+    var d = r.dataset;
+    var a = el('a', 'vikno' + (d.predmet === 'Астрономія' ? ' astro' : ''),
+      '<span class="mitka">' + tekst(d.predmet || '') + '</span>' +
+      '<span class="nazva">' + tekst(d.nazva) + '</span>' +
+      (d.pidpys ? '<span class="propys">' + tekst(d.pidpys) + '</span>' : '') +
+      '<span class="mitka">' + skilky(+d.kartok, F_KARTKY) + ' · ' + skilky(+d.zadach, F_ZADACHI) + '</span>');
+    a.href = '#/' + r.id;
+    return a;
+  }
+
+  /* ── 2. Сторінки предметів і список грядок на головній ── */
+  var hrupy = $('#hrupy-rozdiliv');
+  var pershyiRozdil = rozdily[0];
+  Object.keys(PREDMETY).forEach(function (nazva) {
+    var p = PREDMETY[nazva];
+    var svoi = rozdily.filter(function (r) { return r.dataset.predmet === nazva; });
+    if (!svoi.length) return;
+    var nK = 0, nZ = 0;
+    svoi.forEach(function (r) { nK += +r.dataset.kartok; nZ += +r.dataset.zadach; });
+
+    // на головній
+    hrupy.appendChild(el('div', 'hrupa-nazva',
+      '<h3>' + tekst(nazva) + '</h3><a href="#/' + p.id + '">' + skilky(svoi.length, F_ROZDILY) + ' →</a>'));
+    var sitka = el('div', 'spysok-rozdiliv');
+    svoi.forEach(function (r) { sitka.appendChild(plytka(r)); });
+    hrupy.appendChild(sitka);
+
+    // окрема сторінка предмета
+    var s = el('div', 'predmet');
+    s.id = p.id; s.dataset.storinka = ''; s.dataset.nazva = nazva;
+    s.appendChild(el('div', 'obgortka rozdil-shapka',
+      '<a class="nazad" href="#/">← На головну</a>' +
+      '<span class="mitka">' + skilky(svoi.length, F_ROZDILY) + ' · ' + skilky(nK, F_KARTKY) + ' · ' + skilky(nZ, F_ZADACHI) + '</span>' +
+      '<h1>' + tekst(nazva) + '</h1><p class="propys">' + tekst(p.pidpys) + '</p>' +
+      '<div class="panel">' +
+        '<button class="knopka" type="button" data-diya="zadachi-predmetu" data-predmet="' + tekst(nazva) + '">Усі задачі предмета</button>' +
+        '<button class="knopka" type="button" data-diya="druk">Надрукувати</button>' +
+      '</div>'));
+    var obg = el('div', 'obgortka');
+    obg.style.paddingBottom = 'clamp(3rem,8vw,6rem)';
+    var sitka2 = el('div', 'spysok-rozdiliv');
+    svoi.forEach(function (r) { sitka2.appendChild(plytka(r)); });
+    obg.appendChild(sitka2);
+    s.appendChild(obg);
+    pershyiRozdil.parentNode.insertBefore(s, pershyiRozdil);
   });
-  $('reset').onclick = reset;
-  $('reset2').onclick = () => { reset(); input.focus(); };
-  apply();
+
+  /* ── 3. Сад у числах ── */
+  function chyslo(kliuch, n, f) { $('#n-' + kliuch).textContent = n; $('#l-' + kliuch).textContent = forma(n, f); }
+  var predmetiv = Object.keys(PREDMETY).filter(function (p) { return rozdily.some(function (r) { return r.dataset.predmet === p; }); }).length;
+  chyslo('kartky', dzherelo.size, F_KARTKY);
+  chyslo('zadachi', usiZadachi.length, F_ZADACHI);
+  chyslo('rozdily', rozdily.length, F_ROZDILY);
+  chyslo('predmety', predmetiv, F_PREDMETY);
+
+  /* ── 4. Збірник усіх задач: копії з грядок + пошук ── */
+  var spysokZadach = $('#spysok-zadach'), q = $('#q');
+  var st = { predmet: null, rozdil: null, riven: null };
+  $('#zadachi-mitka').textContent = skilky(usiZadachi.length, F_ZADACHI) + ' з розв’язками · ' + skilky(rozdily.length, F_ROZDILY);
+
+  usiZadachi.forEach(function (z) {
+    var c = z.vuzol.cloneNode(true);
+    c.id = 'z' + z.nomer;
+    $('.dii', c).innerHTML =
+      '<button class="knopka" type="button" data-diya="rozhornuty">Розгорнути</button>' +
+      '<a class="knopka" href="#/' + z.rozdil.id + '">Теорія: ' + tekst(z.rozdil.dataset.nazva) + ' →</a>';
+    z.kopiia = c;
+    spysokZadach.appendChild(c);
+  });
+
+  function knopkaFiltra(myisce, tekstK, lich, natysk) {
+    var b = el('button', 'knopka', tekst(tekstK) + (lich != null ? '<span class="lich">' + lich + '</span>' : ''));
+    b.type = 'button';
+    b.addEventListener('click', natysk);
+    myisce.appendChild(b);
+    return b;
+  }
+  var kPredmet = [], kRozdil = [], kRiven = [];
+  kPredmet.push({ b: knopkaFiltra($('#f-predmet'), 'Усе', null, function () { st.predmet = null; st.rozdil = null; filtr(); }), v: null });
+  Object.keys(PREDMETY).forEach(function (p) {
+    var n = usiZadachi.filter(function (z) { return z.rozdil.dataset.predmet === p; }).length;
+    if (!n) return;
+    kPredmet.push({ b: knopkaFiltra($('#f-predmet'), p, null, function () { st.predmet = p; st.rozdil = null; filtr(); }), v: p });
+  });
+  rozdily.forEach(function (r) {
+    if (!+r.dataset.zadach) return;
+    kRozdil.push({ b: knopkaFiltra($('#f-rozdil'), r.dataset.nazva, r.dataset.zadach, function () {
+      st.rozdil = st.rozdil === r.id ? null : r.id; filtr();
+    }), v: r.id, predmet: r.dataset.predmet });
+  });
+  [1, 2, 3].forEach(function (i) {
+    var n = usiZadachi.filter(function (z) { return z.riven === i; }).length;
+    if (!n) return;
+    kRiven.push({ b: knopkaFiltra($('#f-riven'), RIVNI[i], n, function () { st.riven = st.riven === i ? null : i; filtr(); }), v: i });
+  });
+
+  function filtr() {
+    var slova = norm(q.value).split(' ').filter(Boolean), pokazano = 0;
+    usiZadachi.forEach(function (z) {
+      var ok = (!st.predmet || z.rozdil.dataset.predmet === st.predmet)
+            && (!st.rozdil || z.rozdil.id === st.rozdil)
+            && (!st.riven || z.riven === st.riven)
+            && slova.every(function (w) { return z.poshuk.indexOf(w) !== -1; });
+      z.kopiia.hidden = !ok; if (ok) pokazano++;
+    });
+    kPredmet.forEach(function (k) { k.b.setAttribute('aria-pressed', String(k.v === st.predmet)); });
+    kRozdil.forEach(function (k) {
+      k.b.hidden = !!st.predmet && k.predmet !== st.predmet;
+      k.b.setAttribute('aria-pressed', String(k.v === st.rozdil));
+    });
+    kRiven.forEach(function (k) { k.b.setAttribute('aria-pressed', String(k.v === st.riven)); });
+    var vidfiltrovano = !!(st.predmet || st.rozdil || st.riven || slova.length);
+    $('#stan').textContent = 'Показано ' + pokazano + ' із ' + usiZadachi.length;
+    $('#skynuty').hidden = !vidfiltrovano;
+    $('#porozhn').hidden = pokazano > 0;
+  }
+  function skynuty() { st.predmet = st.rozdil = st.riven = null; q.value = ''; filtr(); }
+  q.addEventListener('input', filtr);
+  q.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') q.blur();
+    if (e.key === 'Escape') { q.value = ''; filtr(); }
+  });
+  $('#skynuty').addEventListener('click', skynuty);
+  $('#skynuty2').addEventListener('click', function () { skynuty(); q.focus(); });
+  filtr();
+
+  /* ── 5. Сторінки: #/ → головна, #/mekhanika → розділ, #/zadachi → задачі ── */
+  var storinky = $$('[data-storinka]');
+  var menu = $('#menu');
+  function marshrut() {
+    var h = location.hash;
+    if (h && h.indexOf('#/') !== 0) return;          // звичайний якір усередині сторінки
+    var id = decodeURIComponent(h.slice(2)) || 'holovna';
+    var potochna = document.getElementById(id);
+    if (!potochna || !potochna.hasAttribute('data-storinka')) { potochna = document.getElementById('holovna'); id = 'holovna'; }
+    storinky.forEach(function (s) { s.hidden = s !== potochna; });
+    var aktyvna = potochna.classList.contains('rozdil') && PREDMETY[potochna.dataset.predmet]
+      ? PREDMETY[potochna.dataset.predmet].id : id;
+    $$('a', menu).forEach(function (a) {
+      if (a.getAttribute('href') === '#/' + aktyvna) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+    document.title = id === 'holovna' ? NAZVA_SAITU : potochna.dataset.nazva + ' — ' + NAZVA_SAITU;
+    window.scrollTo(0, 0);
+    pidihnaty();
+  }
+  window.addEventListener('hashchange', marshrut);
+
+  /* ── 6. Афіша: найдовший рядок займає всю ширину ── */
+  function pidihnaty() {
+    var a = document.getElementById('afisha');
+    if (!a || !a.offsetParent) return;
+    var mira = $('[data-mira]', a);
+    a.style.fontSize = '100px';
+    var w = mira.getBoundingClientRect().width;
+    if (!w) { a.style.fontSize = ''; return; }
+    var poShyryni = 100 * a.parentElement.clientWidth / w;
+    var poVysoti = window.innerHeight * 0.3;
+    a.style.fontSize = Math.min(poShyryni, poVysoti) + 'px';
+  }
+  window.addEventListener('resize', pidihnaty);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(pidihnaty);
+
+  /* ── 7. Сховати ключове ── */
+  var skhovano = false;
+  try { skhovano = localStorage.getItem('skhovaty') === '1'; } catch (e) {}
+
+  function rezhym(uvimk) {
+    skhovano = uvimk;
+    document.body.classList.toggle('skhovaty', uvimk);
+    $$('[data-diya="skhovaty"]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(uvimk));
+      b.textContent = uvimk ? 'Показати ключове' : 'Сховати ключове';
+    });
+    $$('mark').forEach(function (m) {
+      m.classList.remove('vidkryto');
+      if (uvimk) { m.tabIndex = 0; m.setAttribute('role', 'button'); m.setAttribute('aria-label', 'Сховано. Натисніть, щоб відкрити'); }
+      else { m.removeAttribute('tabindex'); m.removeAttribute('role'); m.removeAttribute('aria-label'); }
+    });
+    try { localStorage.setItem('skhovaty', uvimk ? '1' : '0'); } catch (e) {}
+  }
+  function vidkryty(m) {
+    if (!skhovano) return;
+    var v = m.classList.toggle('vidkryto');
+    if (v) m.removeAttribute('aria-label'); else m.setAttribute('aria-label', 'Сховано. Натисніть, щоб відкрити');
+  }
+
+  /* ── 8. Повідомлення й завантаження ── */
+  var spov = $('#spovishchennia'), taimer;
+  function povidomyty(t) {
+    spov.textContent = t; spov.hidden = false;
+    clearTimeout(taimer); taimer = setTimeout(function () { spov.hidden = true; }, 4200);
+  }
+  function zavantazhyty(href, imia) {
+    var a = document.createElement('a');
+    a.href = href; a.download = imia;
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  /* ── 9. Друк будь-якої сторінки: з розв’язками або без ── */
+  var vidkrytiDlyaDruku = [];
+  window.addEventListener('beforeprint', function () {
+    if (document.body.classList.contains('bez-rozv')) return;
+    $$('.zadacha details').forEach(function (x) { if (!x.open) { x.open = true; vidkrytiDlyaDruku.push(x); } });
+  });
+  window.addEventListener('afterprint', function () {
+    vidkrytiDlyaDruku.forEach(function (x) { x.open = false; });
+    vidkrytiDlyaDruku = [];
+    document.body.classList.remove('bez-rozv');
+  });
+  function drukuvaty(zRozvyazkamy) {
+    document.body.classList.toggle('bez-rozv', !zRozvyazkamy);
+    window.print();
+  }
+
+  /* ── 10. Картка → PNG (для Image Occlusion в Anki або шпаргалки) ── */
+  var shryfty = null;
+  function zberehtyPng(kartka, knopka) {
+    if (!window.htmlToImage) { povidomyty('Не вдалося завантажити модуль зображень. Перевірте інтернет і оновіть сторінку.'); return; }
+    var bulo = knopka.textContent, imia = (kartka.dataset.id || 'kartka') + '.png';
+    knopka.disabled = true; knopka.textContent = 'Готую…';
+    kartka.classList.add('eksport');
+    var nalasht = {
+      pixelRatio: 2,
+      backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--rozhevyi').trim() || '#fbe6ee',
+      style: { margin: '0', boxShadow: 'none', borderRadius: '0' }
+    };
+    var krok = shryfty === null
+      ? htmlToImage.getFontEmbedCSS(document.body).then(function (css) {
+          shryfty = css.replace(/,\s*url\((["']?)data:[^)]*\1\)\s*format\((["'])(?:woff|truetype)\2\)/g, '');
+        }, function () { shryfty = ''; })
+      : Promise.resolve();
+    krok.then(function () {
+      if (shryfty) nalasht.fontEmbedCSS = shryfty;
+      return htmlToImage.toPng(kartka, nalasht);
+    }).then(function (url) {
+      zavantazhyty(url, imia);
+      povidomyty('Зображення збережено: ' + imia);
+    }).catch(function () {
+      povidomyty('Не вдалося зберегти зображення. Спробуйте в іншому браузері.');
+    }).then(function () {
+      kartka.classList.remove('eksport');
+      knopka.disabled = false; knopka.textContent = bulo;
+    });
+  }
+
+  /* ── 11. Розділ → файл для Anki (Cloze, кожен <mark> — окремий пропуск) ── */
+  function rozdilDlyaAnki(r) {
+    var d = r.dataset, ryadky = [];
+    $$('.kartka', r).forEach(function (k) {
+      var t = document.createElement('div');
+      t.innerHTML = dzherelo.get(k).replace(/\}\}/g, '} }').replace(/\}\}/g, '} }');   // «}}» у формулах ламає пропуски Anki
+      var h = $('h3', t), nazva = h ? h.textContent.trim() : '';
+      if (h) h.remove();
+      $$('figure, svg, img', t).forEach(function (n) { n.remove(); });
+      var marky = $$('mark', t), tilo;
+      if (marky.length) {
+        marky.forEach(function (m, i) {
+          var f = document.createDocumentFragment();
+          f.appendChild(document.createTextNode('{{c' + (i + 1) + '::'));
+          while (m.firstChild) f.appendChild(m.firstChild);
+          f.appendChild(document.createTextNode((/\}\s*$/.test(f.textContent) ? ' ' : '') + '}}'));
+          m.replaceWith(f);
+        });
+        tilo = t.innerHTML;
+      } else {
+        tilo = '{{c1::' + t.innerHTML + '}}';
+      }
+      var pole1 = ('<b>' + tekst(nazva) + '</b><br>' + tilo).replace(/\s+/g, ' ').trim();
+      var mitky = [(d.predmet || '').toLowerCase(), r.id].filter(Boolean).join(' ');
+      ryadky.push([pole1, tekst(d.nazva), mitky].join('\t'));
+    });
+    var fail = [
+      '#separator:tab', '#html:true', '#notetype:Cloze',
+      '#deck:' + KOLODA_ANKI + '::' + d.nazva, '#tags column:3'
+    ].concat(ryadky).join('\n') + '\n';
+    var url = URL.createObjectURL(new Blob([fail], { type: 'text/plain;charset=utf-8' }));
+    zavantazhyty(url, 'anki-' + r.id + '.txt');
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    povidomyty('Файл anki-' + r.id + '.txt готовий. В Anki: Файл → Імпортувати.');
+  }
+
+  /* ── 12. Розгорнуте вікно ── */
+  var velyke = $('#velyke');
+  function rozhornuty(element) {
+    var kopiia = element.cloneNode(true);
+    kopiia.removeAttribute('id');
+    var kartka = element.classList.contains('kartka');
+    $('.dii', kopiia).innerHTML =
+      '<button class="knopka" type="button" data-diya="zakryty">Закрити</button>' +
+      (kartka
+        ? '<button class="knopka" type="button" data-diya="skhovaty" aria-pressed="' + skhovano + '">' + (skhovano ? 'Показати ключове' : 'Сховати ключове') + '</button>' +
+          '<button class="knopka" type="button" data-diya="png">Зберегти як зображення</button>'
+        : '');
+    velyke.setAttribute('aria-label', kartka ? 'Розгорнута картка' : 'Розгорнута задача');
+    velyke.innerHTML = '';
+    velyke.appendChild(kopiia);
+    if (velyke.showModal) velyke.showModal(); else velyke.setAttribute('open', '');
+  }
+  velyke.addEventListener('click', function (e) { if (e.target === velyke) velyke.close(); });
+
+  /* ── 13. Один обробник на всі кнопки ── */
+  document.addEventListener('click', function (e) {
+    var m = e.target.closest('mark');
+    if (m) { vidkryty(m); return; }
+    var b = e.target.closest('[data-diya]');
+    if (!b) return;
+    var element = b.closest('.element'), r = b.closest('.rozdil');
+    switch (b.dataset.diya) {
+      case 'skhovaty': rezhym(!skhovano); break;
+      case 'anki': rozdilDlyaAnki(r); break;
+      case 'druk': drukuvaty(b.dataset.rozv !== '0'); break;
+      case 'rozhornuty': rozhornuty(element); break;
+      case 'zakryty': velyke.close(); break;
+      case 'png': zberehtyPng(element, b); break;
+      case 'vyd':
+        r.dataset.vyd = b.dataset.vyd;
+        $$('[data-diya="vyd"]', r).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        break;
+      case 'zadachi-predmetu':
+        st.predmet = b.dataset.predmet; st.rozdil = null; filtr();
+        location.hash = '#/zadachi';
+        break;
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('mark[role="button"]')) {
+      e.preventDefault(); vidkryty(e.target);
+    }
+    if (e.key === '/' && document.activeElement !== q && !$('#zadachi').hidden) { e.preventDefault(); q.focus(); }
+  });
+
+  rezhym(skhovano);
+  marshrut();
+
+  /* ── 14. Формули (KaTeX підвантажується нижче) ── */
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!window.renderMathInElement) return;
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\[', right: '\\]', display: true },
+        { left: '\\(', right: '\\)', display: false },
+        { left: '$', right: '$', display: false }
+      ],
+      ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option', 'input'],
+      throwOnError: false, strict: false
+    });
+    pidihnaty();
+  });
 })();
-
-/* Формули */
-function renderFormulas() {
-  renderMathInElement(document.getElementById('tasks'), {
-    delimiters: [
-      { left: '$$', right: '$$', display: true },
-      { left: '$',  right: '$',  display: false }
-    ],
-    throwOnError: false, strict: false
-  });
-}
 </script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderFormulas()"></script>
+
+<script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
 </body>
 </html>
