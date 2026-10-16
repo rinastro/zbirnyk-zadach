@@ -47,6 +47,18 @@
      data-level — складність: 1 легка, 2 середня, 3 складна.
      Номер задачі ставиться сам — за порядком у файлі.
 
+  3а. НОВИЙ КОНСПЕКТ — покладіть HTML-файл конспекту в папку konspekty/
+     (наприклад konspekty/fizyka/kinematyka.html) і додайте в розділ
+     «КОНСПЕКТИ» нижче:
+       <article class="konspekt" data-predmet="Фізика" data-rozdil="mekhanika"
+                data-href="konspekty/fizyka/kinematyka.html">
+         <h3>Кінематика</h3>
+         <p class="propys">рух без причин</p>
+         <p>Один-два рядки про те, що в конспекті.</p>
+       </article>
+     data-rozdil — id розділу саду (тоді посилання з’явиться і на його сторінці).
+     Без data-href конспект показується як «незабаром».
+
   4. ФОРМУЛИ пишуться в LaTeX:
        у рядку        \( … \)  або  $ … $
        окремим рядком \[ … \]  або  $$ … $$
@@ -324,6 +336,20 @@ mark:has(.katex-display){display:block;padding:.25em .4em}
 #spysok-zadach .element{margin:0}
 .porozhn p{margin:0 0 .6rem}
 
+/* конспекти */
+.spysok-rozdiliv .konspekt-plytka{display:flex;flex-direction:column;align-items:flex-start;text-align:left;text-decoration:none;padding:1.1rem 1.25rem 1.2rem}
+.konspekt-plytka > span{display:block}
+.konspekt-plytka .nazva{margin-top:.2rem!important}
+.konspekt-plytka .propys{margin:-.1em 0 .35rem!important}
+.konspekt-plytka p{margin:0 0 .8rem;font-size:.93rem}
+.konspekt-plytka .dali{margin-top:auto;font-weight:600;font-size:.88rem}
+.konspekt-plytka.skoro{cursor:default}
+.konspekt-plytka.skoro .dali{opacity:.55}
+.konspekt-plytka.skoro:hover{transform:none}
+.konspekty-rozdilu{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.8rem;font-size:.9rem;align-items:center}
+.porozhnia-hrupa{opacity:.8;margin:0 0 1rem}
+.konspekty-predmetu{margin-bottom:2.6rem}
+
 /* ─────────── розгорнуте вікно ─────────── */
 dialog.velyke{
   border:0;padding:0;background:transparent;color:inherit;
@@ -484,6 +510,7 @@ dialog.velyke .dii{padding:0 1.6rem 1.3rem}
       <a href="#/fizyka">Фізика</a>
       <a href="#/astronomiya">Астрономія</a>
       <a href="#/zadachi">Задачі</a>
+      <a href="#/konspekty">Конспекти</a>
       <button class="druk-knopka" type="button" data-diya="druk" title="Надрукувати цю сторінку">Друк</button>
     </nav>
   </div>
@@ -574,6 +601,53 @@ dialog.velyke .dii{padding:0 1.6rem 1.3rem}
 
   </div>
 </div>
+
+
+<!-- ═══════════ КОНСПЕКТИ ═══════════ -->
+<section id="konspekty" data-storinka data-nazva="Конспекти">
+  <div class="obgortka rozdil-shapka">
+    <a class="nazad" href="#/">← На головну</a>
+    <span class="mitka" id="konspekty-mitka"></span>
+    <h1>Конспекти</h1>
+    <p class="propys">теорія розгорнуто</p>
+    <div class="panel">
+      <span class="hrupa" role="group" aria-label="Предмет" id="f-konspekty"></span>
+      <span class="rozdilnyk" aria-hidden="true"></span>
+      <button class="knopka" type="button" data-diya="druk">Надрукувати список</button>
+    </div>
+  </div>
+  <div class="obgortka" id="konspekty-hrupy" style="padding-bottom:clamp(3rem,8vw,6rem)"></div>
+
+  <!-- ✏️ СПИСОК КОНСПЕКТІВ. Нові додавайте сюди (див. пункт 3а вгорі).
+       Порядок тут = порядок на сторінці. -->
+  <div id="konspekty-dzherelo" hidden>
+
+    <article class="konspekt" data-predmet="Фізика" data-rozdil="mekhanika">
+      <h3>Кінематика</h3>
+      <p class="propys">рух без причин</p>
+      <p>Система відліку, переміщення, швидкість і прискорення, графіки руху.</p>
+    </article>
+
+    <article class="konspekt" data-predmet="Фізика" data-rozdil="elektryka">
+      <h3>Постійний струм</h3>
+      <p class="propys">від Ома до Кірхгофа</p>
+      <p>Сила струму, напруга, опір, з’єднання провідників, робота й потужність.</p>
+    </article>
+
+    <article class="konspekt" data-predmet="Астрономія" data-rozdil="nebesna-mekhanika">
+      <h3>Закони Кеплера</h3>
+      <p class="propys">як рухаються планети</p>
+      <p>Від Тихо Браге до Ньютона: еліпси, рівні площі, третій закон і маса Сонця.</p>
+    </article>
+
+    <article class="konspekt" data-predmet="Астрономія" data-rozdil="zori">
+      <h3>Життя зір</h3>
+      <p class="propys">від туманності до білого карлика</p>
+      <p>Діаграма Герцшпрунга — Рассела, джерела енергії зір, кінцеві стадії еволюції.</p>
+    </article>
+
+  </div>
+</section>
 
 
 <!-- ═══════════ ЗБІРНИК УСІХ ЗАДАЧ (заповнюється сам) ═══════════ -->
@@ -1614,6 +1688,59 @@ dialog.velyke .dii{padding:0 1.6rem 1.3rem}
   $('#skynuty').addEventListener('click', skynuty);
   $('#skynuty2').addEventListener('click', function () { skynuty(); q.focus(); });
   filtr();
+
+  /* ── 4а. Конспекти: дві групи (Фізика / Астрономія) + посилання в розділах ── */
+  var F_KONSPEKTY = ['конспект', 'конспекти', 'конспектів'];
+  var konspekty = $$('#konspekty-dzherelo > .konspekt');
+  var konspHrupy = $('#konspekty-hrupy'), konspBloky = [];
+  var hotovykh = konspekty.filter(function (k) { return k.dataset.href; }).length;
+  $('#konspekty-mitka').textContent = skilky(konspekty.length, F_KONSPEKTY) +
+    (hotovykh < konspekty.length ? ' · готово ' + hotovykh : '');
+
+  Object.keys(PREDMETY).forEach(function (predmet) {
+    var svoi = konspekty.filter(function (k) { return k.dataset.predmet === predmet; });
+    var blok = el('div', 'konspekty-predmetu');
+    blok.dataset.predmet = predmet;
+    blok.appendChild(el('div', 'hrupa-nazva', '<h3>' + tekst(predmet) + '</h3><span class="mitka">' + skilky(svoi.length, F_KONSPEKTY) + '</span>'));
+    if (!svoi.length) blok.appendChild(el('p', 'porozhnia-hrupa', 'Тут поки порожньо — конспекти скоро виростуть.'));
+    var sitka = el('div', 'spysok-rozdiliv');
+    svoi.forEach(function (k) {
+      var h = $('h3', k), pr = $('.propys', k), op = $('p:not(.propys)', k);
+      var rozdil = k.dataset.rozdil && document.getElementById(k.dataset.rozdil);
+      var href = k.dataset.href;
+      var t = el(href ? 'a' : 'div', 'vikno konspekt-plytka' + (predmet === 'Астрономія' ? ' astro' : '') + (href ? '' : ' skoro'),
+        '<span class="mitka">' + tekst(predmet) + (rozdil ? ' · ' + tekst(rozdil.dataset.nazva) : '') + '</span>' +
+        '<span class="nazva">' + tekst(h ? h.textContent : 'Конспект') + '</span>' +
+        (pr ? '<span class="propys">' + tekst(pr.textContent) + '</span>' : '') +
+        (op ? '<p>' + tekst(op.textContent) + '</p>' : '') +
+        '<span class="dali">' + (href ? 'Відкрити конспект →' : 'Незабаром') + '</span>');
+      if (href) t.href = href;
+      sitka.appendChild(t);
+
+      // посилання на сторінці розділу
+      if (rozdil) {
+        var shapka = $('.rozdil-shapka', rozdil);
+        var riad = $('.konspekty-rozdilu', shapka);
+        if (!riad) { riad = el('div', 'konspekty-rozdilu', '<span class="mitka">Конспекти:</span>'); shapka.appendChild(riad); }
+        riad.appendChild(href
+          ? (function () { var a = el('a', 'knopka', tekst(h ? h.textContent : 'Конспект') + ' →'); a.href = href; return a; })()
+          : el('span', 'knopka', tekst(h ? h.textContent : 'Конспект') + ' · незабаром'));
+      }
+    });
+    blok.appendChild(sitka);
+    konspHrupy.appendChild(blok);
+    konspBloky.push(blok);
+  });
+
+  var konspFiltr = null, kKonsp = [];
+  function filtrKonsp() {
+    konspBloky.forEach(function (b) { b.hidden = !!konspFiltr && b.dataset.predmet !== konspFiltr; });
+    kKonsp.forEach(function (k) { k.b.setAttribute('aria-pressed', String(k.v === konspFiltr)); });
+  }
+  [null].concat(Object.keys(PREDMETY)).forEach(function (p) {
+    kKonsp.push({ v: p, b: knopkaFiltra($('#f-konspekty'), p || 'Усе', null, function () { konspFiltr = p; filtrKonsp(); }) });
+  });
+  filtrKonsp();
 
   /* ── 5. Сторінки: #/ → головна, #/mekhanika → розділ, #/zadachi → задачі ── */
   var storinky = $$('[data-storinka]');
